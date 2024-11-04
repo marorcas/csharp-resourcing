@@ -30,7 +30,7 @@ namespace ResourcingApi.ResourcingJob
             return job;
         }
 
-        public Task<IEnumerable<Job>> GetAllJobs()
+        public Task<List<Job>> GetAllJobs()
         {
             return _repo.GetAllJobs();
         }
@@ -40,11 +40,11 @@ namespace ResourcingApi.ResourcingJob
             return _repo.GetJobById(id);
         }
 
-        public async Task<IEnumerable<Job>> GetJobsByAssignedStatus(bool assigned)
+        public async Task<List<Job>> GetJobsByAssignedStatus(bool assigned)
         {
             var jobs = await _repo.GetAllJobs();
-
-            return jobs.Where(job => job.Assigned == assigned);
+            
+            return jobs.Where(job => job.Assigned == assigned).ToList();
         }
 
         public async Task<Job?> UpdateJobById(long id, UpdateJobDTO data)

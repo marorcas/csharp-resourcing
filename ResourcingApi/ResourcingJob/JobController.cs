@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ResourcingApi.ResourcingJob
@@ -6,9 +7,9 @@ namespace ResourcingApi.ResourcingJob
     [Route("/jobs")]
     public class JobController : ControllerBase
     {
-        private readonly JobService _jobService;
+        private readonly IJobService _jobService;
 
-        public JobController(JobService jobService)
+        public JobController(IJobService jobService)
         {
             _jobService = jobService;
         }
@@ -21,9 +22,15 @@ namespace ResourcingApi.ResourcingJob
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Job>>> GetAll()
+        public async Task<ActionResult<List<Job>>> GetAll([FromQuery] bool? assigned = null)
         {
-            var jobs = await _jobService.GetAllJobs();
+            IEnumerable<Job> jobs;
+            if (assigned.HasValue)
+            {
+                jobs = await _jobService.GetJobsByAssignedStatus(assigned.Value);
+                return Ok(jobs);
+            }
+            jobs = await _jobService.GetAllJobs();
             return Ok(jobs);
         }
 
@@ -33,13 +40,6 @@ namespace ResourcingApi.ResourcingJob
             var job = await _jobService.GetJobById(id);
             if (job == null) return NotFound();
             return Ok(job);
-        }
-
-        [HttpGet]
-        public async Task<ActionResult<List<Job>>> GetByAssigned([FromQuery] bool assigned)
-        {
-            var jobs = await _jobService.GetJobsByAssignedStatus(assigned);
-            return Ok(jobs);
         }
 
         [HttpPatch("{id}")]

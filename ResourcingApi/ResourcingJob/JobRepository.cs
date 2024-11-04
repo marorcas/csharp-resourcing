@@ -18,7 +18,7 @@ namespace ResourcingApi.ResourcingJob
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Job>> GetAllJobs()
+        public async Task<List<Job>> GetAllJobs()
         {
             return await _context.Jobs.ToListAsync();
         }

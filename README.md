@@ -67,3 +67,4 @@ Planned future features and improvements:
 - Created interface for job service
 - Created job service with functions to create a job, get all jobs, get jobs by id, get jobs by assigned status, update job by id and delete job by id
 - Created job controller with functions to create a job, get all jobs, get jobs by id, get jobs by assigned status, update job by id and delete job by id
+- Combined get all and get by assgined functions to a single function in job controller

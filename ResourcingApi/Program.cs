@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ResourcingApi.Data;
+using ResourcingApi.ResourcingJob;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +19,10 @@ builder.Services.AddCors(options =>
 builder.Services.AddDbContext<ResourcingDbContext>(options =>
     options.UseMySql("Server=localhost;Database=ResourcingDb;User=root;Password=MyPass;",
     new MySqlServerVersion(new Version(8, 0, 21))));
+
+builder.Services.AddScoped<IJobRepository, JobRepository>();
+builder.Services.AddScoped<IJobService, JobService>();
+
 builder.Services.AddControllers();
 
 var app = builder.Build();
