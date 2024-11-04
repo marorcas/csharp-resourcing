@@ -76,3 +76,9 @@ Planned future features and improvements:
 - Created temp service with functions to create a temp, get all temps, get a temp by id, update a temp by id and delete a temp by id
 - Created temp controller with functions to create a temp, get all temps, get a temp by id, update a temp by id and delete a temp by id
 - Created basic setup for frontend
+- Added basic styling for frontend
+
+### 5/11/2024
+
+- Created jobs context provider
+- Created temps context provider 
