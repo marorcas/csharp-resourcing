@@ -57,3 +57,4 @@ Planned future features and improvements:
 - Created data models for job and temp 
 - Created many to many relationship between job and temp
 - Set up database on backend
+- Added migrations to keep track of database model changes
