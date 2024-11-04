@@ -1,6 +1,3 @@
-using System.Linq;
-using Org.BouncyCastle.Crypto.Prng;
-
 namespace ResourcingApi.ResourcingJob
 {
     public class JobService : IJobService
