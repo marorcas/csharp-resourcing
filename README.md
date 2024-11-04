@@ -59,3 +59,4 @@ Planned future features and improvements:
 - Set up database on backend
 - Added migrations to keep track of database model changes
 - Created a DTO for creating a job
+- Created a DTO for updating a job
