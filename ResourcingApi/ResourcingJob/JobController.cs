@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ResourcingApi.ResourcingJob
@@ -24,7 +23,7 @@ namespace ResourcingApi.ResourcingJob
         [HttpGet]
         public async Task<ActionResult<List<Job>>> GetAll([FromQuery] bool? assigned = null)
         {
-            IEnumerable<Job> jobs;
+            List<Job> jobs;
             if (assigned.HasValue)
             {
                 jobs = await _jobService.GetJobsByAssignedStatus(assigned.Value);

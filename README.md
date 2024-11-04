@@ -68,3 +68,10 @@ Planned future features and improvements:
 - Created job service with functions to create a job, get all jobs, get jobs by id, get jobs by assigned status, update job by id and delete job by id
 - Created job controller with functions to create a job, get all jobs, get jobs by id, get jobs by assigned status, update job by id and delete job by id
 - Combined get all and get by assgined functions to a single function in job controller
+- Created a DTO for creating a temp
+- Created a DTO for updating a temp
+- Created an interface for temp repository
+- Created a temp repository with functions to create a temp, get all temps, get a temp by id, update a temp by id and delete a temp by id
+- Created interface for temp service
+- Created temp service with functions to create a temp, get all temps, get a temp by id, update a temp by id and delete a temp by id
+- Created temp controller with functions to create a temp, get all temps, get a temp by id, update a temp by id and delete a temp by id

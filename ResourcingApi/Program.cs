@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ResourcingApi.Data;
 using ResourcingApi.ResourcingJob;
+using ResourcingApi.ResourcingTemp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +23,8 @@ builder.Services.AddDbContext<ResourcingDbContext>(options =>
 
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IJobService, JobService>();
+builder.Services.AddScoped<ITempRepository, TempRepository>();
+builder.Services.AddScoped<ITempService, TempService>();
 
 builder.Services.AddControllers();
 

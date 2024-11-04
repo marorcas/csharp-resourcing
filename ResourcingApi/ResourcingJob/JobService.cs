@@ -1,13 +1,13 @@
 namespace ResourcingApi.ResourcingJob
 {
     public class JobService : IJobService
-{
-    private readonly IJobRepository _repo;
-
-    public JobService(IJobRepository repo)
     {
-        _repo = repo;
-    }
+        private readonly IJobRepository _repo;
+
+        public JobService(IJobRepository repo)
+        {
+            _repo = repo;
+        }
 
         public async Task<Job> CreateJob(CreateJobDTO data)
         {
