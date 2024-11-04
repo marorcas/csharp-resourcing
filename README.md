@@ -75,3 +75,4 @@ Planned future features and improvements:
 - Created interface for temp service
 - Created temp service with functions to create a temp, get all temps, get a temp by id, update a temp by id and delete a temp by id
 - Created temp controller with functions to create a temp, get all temps, get a temp by id, update a temp by id and delete a temp by id
+- Created basic setup for frontend
