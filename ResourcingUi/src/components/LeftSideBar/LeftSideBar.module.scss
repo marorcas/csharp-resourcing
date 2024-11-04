@@ -1,0 +1,22 @@
+.LeftSideBar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 20%;
+    background-color: #24272B;
+}
+
+.ProfileInfo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 35%;
+    color: gray;
+}
+
+.NavBarContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 65%;
+}

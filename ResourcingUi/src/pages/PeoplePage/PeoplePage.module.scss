@@ -1,0 +1,23 @@
+.PeoplePage {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+.MainSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: inherit;
+    width: 70%;
+}
+
+.PopUpSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
+    width: 30%;
+    border-radius: 0 15px 15px 0;
+}
