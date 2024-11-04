@@ -1,17 +1,24 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import JobCard from "../../components/JobCard/JobCard";
 import styles from "./JobsPage.module.scss";
-import { JobResponse } from "../../services/job-services";
+import { getAllJobs, JobResponse } from "../../services/job-services";
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
+import { JobsContext } from "../../contexts/JobsContextProvider/JobsContextProvider";
 
 const JobsPage = () => {
-  const tempJobs = [
-    {id: 1, name: "Job 1", startDate: "1/10/2024", endDate: "22/10/2024"},
-    {id: 2, name: "Job 2", startDate: "1/10/2024", endDate: "22/10/2024"},
-    {id: 3, name: "Job 3", startDate: "1/10/2024", endDate: "27/10/2024"},
-    {id: 4, name: "Job 4", startDate: "1/10/2024", endDate: "26/10/2024"},
-    {id: 5, name: "Job 5", startDate: "1/10/2024", endDate: "29/10/2024"}
-  ]
+  const jobsContext = useContext(JobsContext);
+  if (jobsContext === undefined) {
+    throw new Error("Something went wrong");
+  }
+  const { jobs, setJobs } = jobsContext;
+
+  useEffect(() => {
+    getAllJobs()
+      .then((data) => {
+        setJobs(data);
+      })
+      .catch((e) => console.warn(e));
+  }, []);
 
   const [selectedJob, setSelectedJob] = useState<JobResponse | null>(null);
 
@@ -30,7 +37,7 @@ const JobsPage = () => {
         <p>Search Bar</p>
         <p>Filter By</p>
         <ListWrapper>
-          {tempJobs.map((job) => 
+          {jobs.map((job) => 
             <JobCard key={job.id} job={job} onClick={handleJobClick}/>
           )}
         </ListWrapper>

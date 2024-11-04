@@ -1,15 +1,24 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styles from "./PeoplePage.module.scss";
-import { TempResponse } from "../../services/temp-services";
+import { getAllTemps, TempResponse } from "../../services/temp-services";
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 import PersonCard from "../../components/PersonCard/PersonCard";
+import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextProvider";
 
 const PeoplePage = () => {
-  const tempPeople = [
-    {id: 1, firstName: "John", lastName: "Smith"},
-    {id: 2, firstName: "Jane", lastName: "Doe"},
-    {id: 3, firstName: "Sarah", lastName: "Jones"},
-  ]
+  const tempsContext = useContext(TempsContext);
+  if (tempsContext === undefined) {
+    throw new Error("Something went wrong");
+  }
+  const { temps, setTemps } = tempsContext;
+
+  useEffect(() => {
+    getAllTemps()
+      .then((data) => {
+        setTemps(data);
+      })
+      .catch((e) => console.warn(e));
+  }, []);
 
   const [selectedPerson, setSelectedPerson] = useState<TempResponse | null>(null);
 
@@ -28,7 +37,7 @@ const PeoplePage = () => {
         <p>Search Bar</p>
         <p>Filter By</p>
         <ListWrapper>
-          {tempPeople.map((person) => 
+          {temps.map((person) => 
             <PersonCard key={person.id} person={person} onClick={handlePersonClick}/>
           )}
         </ListWrapper>

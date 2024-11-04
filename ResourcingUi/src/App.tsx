@@ -5,20 +5,25 @@ import JobsPage from './pages/JobsPage/JobsPage'
 import PageWrapper from './wrappers/PageWrapper/PageWrapper'
 import PeoplePage from './pages/PeoplePage/PeoplePage'
 import DashboardPage from './pages/DashboardPage/DashboardPage'
+import JobsContextProvider from './contexts/JobsContextProvider/JobsContextProvider'
+import TempsContextProvider from './contexts/TempsContextProvider/TempsContextProvider'
 
 function App() {
   return (
     <>
-      <PageContainer>
-        <BrowserRouter>
+      <JobsContextProvider>
+        <TempsContextProvider>
 
-          <LeftSideBar/>
+          <PageContainer>
+            <BrowserRouter>
 
-            <Routes>
-              <Route 
-                path='/' 
-                element={<PageWrapper><DashboardPage/></PageWrapper>}
-              />
+              <LeftSideBar/>
+
+              <Routes>
+                <Route 
+                  path='/' 
+                  element={<PageWrapper><DashboardPage/></PageWrapper>}
+                />
                 <Route 
                   path='/jobs' 
                   element={<PageWrapper><JobsPage/></PageWrapper>}
@@ -27,10 +32,13 @@ function App() {
                   path='/people' 
                   element={<PageWrapper><PeoplePage/></PageWrapper>}
                 />
-            </Routes>
+              </Routes>
 
-        </BrowserRouter>
-      </PageContainer>
+            </BrowserRouter>
+          </PageContainer>
+          
+        </TempsContextProvider>
+      </JobsContextProvider>
     </>
   )
 }

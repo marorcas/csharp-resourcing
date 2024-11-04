@@ -82,3 +82,7 @@ Planned future features and improvements:
 
 - Created jobs context provider
 - Created temps context provider 
+- Created function to fetch all jobs for frontend
+- Displayed jobs from backend on frontend
+- Created function to fetch all temps for frontend
+- Displayed temps from backend on frontend
