@@ -60,3 +60,5 @@ Planned future features and improvements:
 - Added migrations to keep track of database model changes
 - Created a DTO for creating a job
 - Created a DTO for updating a job
+- Created an interface for job repository
+- Created a job repository with functions to create a job, get all jobs, get job by id, get jobs by assigned status, update job by id and delete job by id
