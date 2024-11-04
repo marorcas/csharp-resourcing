@@ -55,3 +55,4 @@ Planned future features and improvements:
 - Created basic setup for backend
 - Created MySQL database 
 - Created data models for job and temp 
+- Created many to many relationship between job and temp
