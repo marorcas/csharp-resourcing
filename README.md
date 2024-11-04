@@ -62,3 +62,7 @@ Planned future features and improvements:
 - Created a DTO for updating a job
 - Created an interface for job repository
 - Created a job repository with functions to create a job, get all jobs, get job by id, get jobs by assigned status, update job by id and delete job by id
+- Edited repository functions to remove any business logic and focus on data access and persistence
+- Removed get jobs by assigned status function from repository and moved it to job service instead
+- Created interface for job service
+- Created job service with functions to create a job, get all jobs, get jobs by id, get jobs by assigned status, update job by id and delte job by id

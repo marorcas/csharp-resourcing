@@ -12,37 +12,32 @@ namespace ResourcingApi.ResourcingJob
             _context = context;
         }
 
-        public async Task<Job> CreateJob(Job job)
+        public async Task CreateJob(Job job)
         {
             _context.Jobs.Add(job);
             await _context.SaveChangesAsync();
-            return job;
         }
 
         public async Task<IEnumerable<Job>> GetAllJobs()
         {
-            var jobs = await _context.Jobs.ToListAsync();
-            return jobs;
+            return await _context.Jobs.ToListAsync();
         }
 
-        public Task<Job?> GetJobById(long id)
+        public async Task<Job?> GetJobById(long id)
         {
-            throw new NotImplementedException();
+            return await _context.Jobs.FindAsync(id);
         }
 
-        public Task<IEnumerable<Job>> GetJobsByAssignedStatus(bool assigned)
+        public async Task UpdateJobById(Job job)
         {
-            throw new NotImplementedException();
+            _context.Jobs.Update(job);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Job?> UpdateJobById(long id, UpdateJobDTO data)
+        public async Task DeleteJobById(Job job)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<Job?> DeleteJobById(long id)
-        {
-            throw new NotImplementedException();
+            _context.Jobs.Remove(job);
+            await _context.SaveChangesAsync();
         }
     }
 }
