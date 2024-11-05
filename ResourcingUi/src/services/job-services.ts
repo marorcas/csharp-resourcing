@@ -1,3 +1,5 @@
+import { JobFormData } from "../components/JobForm/schema";
+
 const apiBaseUrl = "http://localhost:5180/jobs";
 
 export interface JobResponse {
@@ -5,6 +7,21 @@ export interface JobResponse {
     name: string;
     startDate: string;
     endDate: string;
+}
+
+export const createJob = async (data: JobFormData) => {
+    const response = await fetch(apiBaseUrl, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    if (!response) {
+        throw new Error('Failed to post');
+    }
+
+    return await response.json();
 }
 
 export const getAllJobs = async () => {
@@ -20,4 +37,15 @@ export const getAllJobs = async () => {
     }
 
     return data as JobResponse[];
+}
+
+export const deleteJobById = async (id: number) => {
+    const response = await fetch(`${apiBaseUrl}/${id}`, {
+        method: 'DELETE'
+    });
+    if (!response.ok) {
+        throw new Error('Failed to delete');
+    }
+    
+    return true;
 }

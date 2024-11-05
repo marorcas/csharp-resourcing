@@ -1,9 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import JobCard from "../../components/JobCard/JobCard";
 import styles from "./JobsPage.module.scss";
-import { getAllJobs, JobResponse } from "../../services/job-services";
+import { createJob, getAllJobs, JobResponse } from "../../services/job-services";
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 import { JobsContext } from "../../contexts/JobsContextProvider/JobsContextProvider";
+import JobForm from "../../components/JobForm/JobForm";
+import { useNavigate } from "react-router-dom";
+import { JobFormData } from "../../components/JobForm/schema";
 
 const JobsPage = () => {
   const jobsContext = useContext(JobsContext);
@@ -21,6 +24,7 @@ const JobsPage = () => {
   }, []);
 
   const [selectedJob, setSelectedJob] = useState<JobResponse | null>(null);
+  const [isCreateJobFormOpen, setIsCreateJobFormOpen] = useState<boolean>(false);
 
   const handleJobClick = (job: JobResponse) => {
     setSelectedJob(job);
@@ -28,6 +32,25 @@ const JobsPage = () => {
 
   const handleCloseJob = () => {
     setSelectedJob(null);
+  }
+  
+  const handleCreateJobBtnClick = () => {
+    setIsCreateJobFormOpen(true);
+  }
+
+  const handleCloseCreateJobForm = () => {
+    setIsCreateJobFormOpen(false);
+  }
+
+  const navigate = useNavigate();
+    
+  const onSubmit = async (data: JobFormData) => {
+    createJob(data)
+      .then((job) => {
+        console.log(job);
+        navigate('/');
+      })
+      .catch((e) => console.log(e));
   }
 
   return (
@@ -43,11 +66,23 @@ const JobsPage = () => {
         </ListWrapper>
       </div>
 
-      {selectedJob && (
-        <div className={styles.PopUpSection}>
+      {selectedJob ? (
+        <div className={styles.JobPopUp}>
           <h2>{selectedJob.name}</h2>
           <p>Job Details</p>
           <button onClick={handleCloseJob}>Close</button>
+        </div>
+      ) : (
+        <div className={styles.CreateJobContainer}>
+          {isCreateJobFormOpen ? ( 
+            <div className={styles.CreateJobFormPopUp}>
+              <JobForm onSubmit={onSubmit}/>
+
+              <button onClick={handleCloseCreateJobForm}>Close</button>
+            </div>
+          ) : (
+            <button onClick={handleCreateJobBtnClick}>Create Job</button>
+          )}
         </div>
       )}
     </div>
