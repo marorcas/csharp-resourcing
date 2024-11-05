@@ -86,3 +86,4 @@ Planned future features and improvements:
 - Displayed jobs from backend on frontend
 - Created function to fetch all temps for frontend
 - Displayed temps from backend on frontend
+- Created date time converter on the backend to render dates in "dd-mm-yyyy" format on frontend
