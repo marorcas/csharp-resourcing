@@ -77,10 +77,20 @@ const PeoplePage = () => {
 
               <TempForm onSubmit={onSubmit}/>
 
-              <button onClick={handleCloseCreateTempForm}>Close</button>
+              <button 
+                className={styles.Button}
+                onClick={handleCloseCreateTempForm}
+              >
+                Close
+              </button>
             </div>
           ) : (
-            <button onClick={handleCreateTempBtnClick}>Create Person</button>
+            <button 
+              className={styles.Button}
+              onClick={handleCreateTempBtnClick}
+            >
+              Create Person
+            </button>
           )}
         </div>
       )}

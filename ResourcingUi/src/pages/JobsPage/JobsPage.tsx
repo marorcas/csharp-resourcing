@@ -77,10 +77,20 @@ const JobsPage = () => {
 
               <JobForm onSubmit={onSubmit}/>
 
-              <button onClick={handleCloseCreateJobForm}>Close</button>
+              <button
+              className={styles.Button}
+                onClick={handleCloseCreateJobForm}
+              >
+                Close
+              </button>
             </div>
           ) : (
-            <button onClick={handleCreateJobBtnClick}>Create Job</button>
+            <button 
+              className={styles.Button}
+              onClick={handleCreateJobBtnClick}
+            >
+              Create Job
+            </button>
           )}
         </div>
       )}
