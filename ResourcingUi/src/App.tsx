@@ -7,38 +7,41 @@ import PeoplePage from './pages/PeoplePage/PeoplePage'
 import DashboardPage from './pages/DashboardPage/DashboardPage'
 import JobsContextProvider from './contexts/JobsContextProvider/JobsContextProvider'
 import TempsContextProvider from './contexts/TempsContextProvider/TempsContextProvider'
+import LinkSelectionContextProvider from './contexts/LinkSelectionContextProvider/LinkSelectionContextProvider'
 
 function App() {
   return (
     <>
-      <JobsContextProvider>
-        <TempsContextProvider>
+      <LinkSelectionContextProvider>
+        <JobsContextProvider>
+          <TempsContextProvider>
 
-          <PageContainer>
-            <BrowserRouter>
+            <PageContainer>
+              <BrowserRouter>
 
-              <LeftSideBar/>
+                <LeftSideBar/>
 
-              <Routes>
-                <Route 
-                  path='/' 
-                  element={<PageWrapper><DashboardPage/></PageWrapper>}
-                />
-                <Route 
-                  path='/jobs' 
-                  element={<PageWrapper><JobsPage/></PageWrapper>}
-                />
-                <Route 
-                  path='/people' 
-                  element={<PageWrapper><PeoplePage/></PageWrapper>}
-                />
-              </Routes>
+                <Routes>
+                  <Route 
+                    path='/' 
+                    element={<PageWrapper><DashboardPage/></PageWrapper>}
+                  />
+                  <Route 
+                    path='/jobs' 
+                    element={<PageWrapper><JobsPage/></PageWrapper>}
+                  />
+                  <Route 
+                    path='/people' 
+                    element={<PageWrapper><PeoplePage/></PageWrapper>}
+                  />
+                </Routes>
 
-            </BrowserRouter>
-          </PageContainer>
-          
-        </TempsContextProvider>
-      </JobsContextProvider>
+              </BrowserRouter>
+            </PageContainer>
+            
+          </TempsContextProvider>
+        </JobsContextProvider>
+      </LinkSelectionContextProvider>
     </>
   )
 }

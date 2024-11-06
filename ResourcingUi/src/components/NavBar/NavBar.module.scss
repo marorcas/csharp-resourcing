@@ -18,9 +18,10 @@
     &:hover {
         color: gray;
         cursor: pointer;
+        font-size: 1.1rem;
     }
+}
 
-    &:focus {
-        color: white;
-    }
+.SelectedLink {
+    color: white;
 }
