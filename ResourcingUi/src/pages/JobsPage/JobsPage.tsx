@@ -47,8 +47,9 @@ const JobsPage = () => {
   const onSubmit = async (data: JobFormData) => {
     createJob(data)
       .then((job) => {
+        setJobs([...jobs, job]);
         console.log(job);
-        navigate('/');
+        navigate('/jobs');
       })
       .catch((e) => console.log(e));
   }
@@ -76,6 +77,8 @@ const JobsPage = () => {
         <div className={styles.CreateJobContainer}>
           {isCreateJobFormOpen ? ( 
             <div className={styles.CreateJobFormPopUp}>
+              <h2>Create New Job</h2>
+
               <JobForm onSubmit={onSubmit}/>
 
               <button onClick={handleCloseCreateJobForm}>Close</button>

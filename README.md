@@ -88,3 +88,7 @@ Planned future features and improvements:
 - Displayed temps from backend on frontend
 - Created date time converter on the backend to render dates in "dd-mm-yyyy" format on frontend
 - Created basic form to create a job
+
+### 6/11/2024
+
+- Implemented react datepicker for start date and end date fields of job creation form

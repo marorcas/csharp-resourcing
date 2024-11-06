@@ -1,11 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { schema, JobFormData } from "./schema";
 import styles from "./JobForm.module.scss";
 import { useContext, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { JobsContext } from "../../contexts/JobsContextProvider/JobsContextProvider";
 import { deleteJobById } from "../../services/job-services";
+import DatePicker from "react-datepicker";
+import 'react-datepicker/dist/react-datepicker.css';
 
 type FormType = 'ADD' | 'EDIT';
 
@@ -22,6 +24,7 @@ const JobForm = ({
 }: JobFormProps) => {
 
     const {
+        control,
         reset,
         register, 
         formState: { errors, isSubmitSuccessful }, 
@@ -47,12 +50,12 @@ const JobForm = ({
         setName(event.target.value);
     }
 
-    const handleStartDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setStartDate(event.target.value);
+    const handleStartDateChange = (date: Date | null) => {
+        setStartDate(date ? date.toISOString() : null);
     }
 
-    const handleEndDateChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setEndDate(event.target.value);
+    const handleEndDateChange = (date: Date | null) => {
+        setEndDate(date ? date.toISOString() : null);
     }
 
     const onDelete = async (id: number) => {
@@ -70,7 +73,7 @@ const JobForm = ({
         if (isDeleted) {
             const updatedJobs = jobs.filter(job => job.id !== id);
             setJobs(updatedJobs);
-            navigate("/");
+            navigate("/jobs");
         }
     }
 
@@ -100,11 +103,13 @@ const JobForm = ({
 
                 <div className={styles.Field}>
                     <label htmlFor="startDate">Start date</label>
-                    <input 
-                        id="startDate" 
-                        type="text" {...register('startDate')} 
+                    <DatePicker
+                        {...register('startDate')}
+                        id="startDate"
+                        selected={startDate ? new Date(startDate) : null}
                         onChange={handleStartDateChange}
-                        placeholder="Add start date..."
+                        placeholderText="Select start date..."
+                        dateFormat="dd-MM-yyyy"
                     />
                     {errors?.startDate && 
                         <small className={styles.ErrorText}>
@@ -115,11 +120,13 @@ const JobForm = ({
 
                 <div className={styles.Field}>
                     <label htmlFor="endDate">End date</label>
-                    <input 
-                        id="endDate" 
-                        type="text" {...register('endDate')} 
+                    <DatePicker
+                        {...register('endDate')}
+                        id="endDate"
+                        selected={endDate ? new Date(endDate) : null}
                         onChange={handleEndDateChange}
-                        placeholder="Add end date..."
+                        placeholderText="Select end date..."
+                        dateFormat="dd-MM-yyyy"
                     />
                     {errors?.endDate && 
                         <small className={styles.ErrorText}>

@@ -1,0 +1,34 @@
+.Form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1em;
+    padding: 0.25em;
+    width: 50%;
+}
+
+.Field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25em;
+}
+
+.ErrorText {
+    color: red;
+}
+
+.Buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.Button {
+    padding: 1em;
+    margin: 1em;
+}
+
+input {
+    border-radius: 5px;
+    border: 1px solid rgb(black, 0.2);
+}
