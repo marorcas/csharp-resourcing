@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { schema, JobFormData } from "./schema";
 import styles from "./JobForm.module.scss";
 import { useContext, useState } from "react";
@@ -24,7 +24,6 @@ const JobForm = ({
 }: JobFormProps) => {
 
     const {
-        control,
         reset,
         register, 
         formState: { errors, isSubmitSuccessful }, 
@@ -59,7 +58,7 @@ const JobForm = ({
     }
 
     const onDelete = async (id: number) => {
-        const confirmed = confirm("Are you sure you want to delete this task?");
+        const confirmed = confirm("Are you sure you want to delete this job?");
         if (!confirmed) {
             return;
         }

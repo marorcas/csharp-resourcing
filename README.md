@@ -92,3 +92,4 @@ Planned future features and improvements:
 ### 6/11/2024
 
 - Implemented react datepicker for start date and end date fields of job creation form
+- Created form to create a temp

@@ -5,7 +5,6 @@ import { createJob, getAllJobs, JobResponse } from "../../services/job-services"
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 import { JobsContext } from "../../contexts/JobsContextProvider/JobsContextProvider";
 import JobForm from "../../components/JobForm/JobForm";
-import { useNavigate } from "react-router-dom";
 import { JobFormData } from "../../components/JobForm/schema";
 
 const JobsPage = () => {
@@ -41,15 +40,12 @@ const JobsPage = () => {
   const handleCloseCreateJobForm = () => {
     setIsCreateJobFormOpen(false);
   }
-
-  const navigate = useNavigate();
     
   const onSubmit = async (data: JobFormData) => {
     createJob(data)
       .then((job) => {
         setJobs([...jobs, job]);
         console.log(job);
-        navigate('/jobs');
       })
       .catch((e) => console.log(e));
   }
