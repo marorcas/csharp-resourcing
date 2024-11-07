@@ -6,7 +6,7 @@ import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 import { JobsContext } from "../../contexts/JobsContextProvider/JobsContextProvider";
 import JobForm from "../../components/JobForm/JobForm";
 import { JobFormData } from "../../components/JobForm/schema";
-import { filterOption, filterOptionType, sortJobs } from "../../services/format";
+import { filterOption, filterOptionType, sortJobs } from "../../services/job-format";
 
 
 const JobsPage = () => {

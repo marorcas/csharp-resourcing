@@ -50,3 +50,10 @@
     gap: 0.5em;
     padding-bottom: 1em;
 }
+
+.TempInfo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
 import styles from "./PeoplePage.module.scss";
-import { createTemp, getAllTemps, TempResponse } from "../../services/temp-services";
+import { createTemp, getAllTemps, TempResponse, updateTempById } from "../../services/temp-services";
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 import PersonCard from "../../components/PersonCard/PersonCard";
 import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextProvider";
 import { TempFormData } from "../../components/TempForm/schema";
 import TempForm from "../../components/TempForm/TempForm";
+import { sortTemps } from "../../services/temp-format";
 
 const filterOption = {
   FIRSTNAME: 'First Name',
@@ -21,30 +22,10 @@ const PeoplePage = () => {
   }
   const { temps, setTemps } = tempsContext;
 
-  const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.FIRSTNAME);
-
-  useEffect(() => {
-    getAllTemps()
-      .then((data) => {
-        const orderedData = data.sort((a, b) => a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase()));
-        setTemps(orderedData);
-      })
-      .catch((e) => console.warn(e));
-  }, []);
-
-  useEffect(() => {
-    const sortedTemps = [...temps];
-    if (selectedFilter === filterOption.LASTNAME) {
-      sortedTemps.sort((a, b) => a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase()));
-    } else {
-      sortedTemps.sort((a, b) => a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase()));
-    }
-
-    setTemps(sortedTemps);
-  }, [selectedFilter]);
-
   const [selectedPerson, setSelectedPerson] = useState<TempResponse | null>(null);
+  const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.FIRSTNAME);
   const [isCreateTempFormOpen, setIsCreateTempFormOpen] = useState<boolean>(false);
+  const [isEditTempFormOpen, setIsEditTempFormOpen] = useState<boolean>(false);
 
   const handlePersonClick = (person: TempResponse) => {
     setSelectedPerson(person);
@@ -54,6 +35,10 @@ const PeoplePage = () => {
     setSelectedPerson(null);
   }
 
+  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFilter(event.target.value);
+  };
+
   const handleCreateTempBtnClick = () => {
     setIsCreateTempFormOpen(true);
   }
@@ -61,19 +46,49 @@ const PeoplePage = () => {
   const handleCloseCreateTempForm = () => {
     setIsCreateTempFormOpen(false);
   }
+
+  const handleEditTempBtnClick = () => {
+    setIsEditTempFormOpen(true);
+  }
+
+  const handleCloseEditTempForm = () => {
+    setIsEditTempFormOpen(false);
+  }
     
-  const onSubmit = async (data: TempFormData) => {
+  const onCreateSubmit = async (data: TempFormData) => {
     createTemp(data)
       .then((temp) => {
-        setTemps([...temps, temp]);
+        const updatedTemps = [...temps, temp];
+        const sortedUpdatedTemps = sortTemps(updatedTemps, selectedFilter);
+        setTemps(sortedUpdatedTemps);
         console.log(temp);
       })
       .catch((e) => console.log(e));
   }
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedFilter(event.target.value);
-  };
+  const onEditSubmit = async (id: number, data: TempFormData) => {
+    updateTempById(id, data)
+      .then(() => {
+          const updatedTemps = temps.map((temp) => temp.id === id ? { ...temp, ...data } : temp);
+          const sortedUpdatedTemps = sortTemps(updatedTemps, selectedFilter);
+          setTemps(sortedUpdatedTemps);
+      })
+      .catch((e) => console.log(e));
+  }
+
+  useEffect(() => {
+    getAllTemps()
+      .then((data) => {
+        const orderedData = sortTemps(data, selectedFilter);
+        setTemps(orderedData);
+      })
+      .catch((e) => console.warn(e));
+  }, []);
+
+  useEffect(() => {
+    const sortedTemps = [...temps];
+    setTemps(sortTemps(sortedTemps, selectedFilter));
+  }, [selectedFilter]);
 
   return (
     <div className={styles.PeoplePage}>
@@ -103,20 +118,51 @@ const PeoplePage = () => {
 
       {selectedPerson ? (
         <div className={styles.TempPopUp}>
-          <h2>{`${selectedPerson.firstName} ${selectedPerson.lastName}`}</h2>
-          <p>Person Details</p>
-          <button onClick={handleClosePerson}>Close</button>
+          {isEditTempFormOpen ? ( 
+            <div className={styles.CreateTempFormPopUp}>
+              <h2>Edit Temp</h2>
+
+              <TempForm 
+                formType="EDIT"
+                defaultValues={selectedPerson}
+                onSubmit={(data) => onEditSubmit(selectedPerson.id, data)}
+              />
+
+              <button
+                className={styles.Button}
+                onClick={handleCloseEditTempForm}
+              >
+                Close
+              </button>
+            </div>
+          ) : (
+            <div className={styles.TempInfo}>
+              <h2>{selectedPerson.firstName} {selectedPerson.lastName}</h2>
+              <button 
+                className={styles.Button}
+                onClick={handleEditTempBtnClick}
+              >
+                Edit
+              </button>
+              <button 
+                className={styles.Button}
+                onClick={handleClosePerson}
+              >
+                Close
+              </button>
+            </div>
+          )}
         </div>
-      ): (
+      ) : (
         <div className={styles.CreateTempContainer}>
           {isCreateTempFormOpen ? ( 
             <div className={styles.CreateTempFormPopUp}>
               <h2>Create New Person</h2>
 
-              <TempForm onSubmit={onSubmit}/>
+              <TempForm onSubmit={onCreateSubmit}/>
 
-              <button 
-                className={styles.Button}
+              <button
+              className={styles.Button}
                 onClick={handleCloseCreateTempForm}
               >
                 Close

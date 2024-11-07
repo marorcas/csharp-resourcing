@@ -2,8 +2,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { schema, JobFormData } from "./schema";
 import styles from "./JobForm.module.scss";
-import { useContext, useState } from "react";
-import { JobsContext } from "../../contexts/JobsContextProvider/JobsContextProvider";
+import { useState } from "react";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 
@@ -27,11 +26,6 @@ const JobForm = ({
         formState: { errors, isSubmitSuccessful }, 
         handleSubmit,
     } = useForm<JobFormData>({ resolver: zodResolver(schema), defaultValues });
-
-    const jobsContext = useContext(JobsContext);
-    if (jobsContext === undefined) {
-        throw new Error('Something went wrong');
-    }
    
     const [name, setName] = useState<string>(defaultValues.name);
     const [startDate, setStartDate] = useState<string | null | undefined>(defaultValues.startDate);

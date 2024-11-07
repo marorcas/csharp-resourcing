@@ -2,11 +2,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { schema, TempFormData } from "./schema";
 import styles from "./TempForm.module.scss";
-import { useContext, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 import 'react-datepicker/dist/react-datepicker.css';
-import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextProvider";
-import { deleteTempById } from "../../services/temp-services";
 
 type FormType = 'ADD' | 'EDIT';
 
@@ -28,17 +25,6 @@ const TempForm = ({
         formState: { errors, isSubmitSuccessful }, 
         handleSubmit,
     } = useForm<TempFormData>({ resolver: zodResolver(schema), defaultValues });
-
-    const tempsContext = useContext(TempsContext);
-    if (tempsContext === undefined) {
-        throw new Error('Something went wrong');
-    }
-    const { temps, setTemps } = tempsContext;
-
-    const { id } = useParams() as { id: string };
-    const idNumber = parseInt(id);
-
-    const navigate = useNavigate();
    
     const [firstName, setFirstName] = useState<string>(defaultValues.firstName);
     const [lastName, setLastName] = useState<string>(defaultValues.lastName);
@@ -49,25 +35,6 @@ const TempForm = ({
 
     const handleLastNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setLastName(event.target.value);
-    }
-
-    const onDelete = async (id: number) => {
-        const confirmed = confirm("Are you sure you want to delete this person?");
-        if (!confirmed) {
-            return;
-        }
-
-        const isDeleted = await deleteTempById(id)
-            .catch((e) => {
-                console.log(e)
-                return false;
-            });
-
-        if (isDeleted) {
-            const updatedTemps = temps.filter(temp => temp.id !== id);
-            setTemps(updatedTemps);
-            navigate("/temps");
-        }
     }
 
     isSubmitSuccessful && reset();
@@ -109,9 +76,7 @@ const TempForm = ({
                     }
                 </div>
 
-                <div className={styles.Buttons}>
-                    {formType === "EDIT" && <button className={styles.Button} onClick={() => onDelete(idNumber)}>Delete</button>}
-                    
+                <div className={styles.Buttons}>                    
                     <button className={styles.Button} type="submit">{formType === 'ADD' ? 'Add' : 'Edit'}</button>
                 </div>
             </form>
