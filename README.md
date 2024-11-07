@@ -97,3 +97,4 @@ Planned future features and improvements:
 ### 7/11/2024
 
 - Created a context for selected link for the side bar
+- Created filter feature for jobs
