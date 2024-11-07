@@ -101,3 +101,4 @@ Planned future features and improvements:
 - Created filter feature for temps
 - Created form to edit job
 - Created form to edit temp
+- Implemented many to many relationship functionality in backend

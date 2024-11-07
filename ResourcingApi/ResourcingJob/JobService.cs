@@ -1,3 +1,5 @@
+using ResourcingApi.ResourcingTemp;
+
 namespace ResourcingApi.ResourcingJob
 {
     public class JobService : IJobService
@@ -70,6 +72,31 @@ namespace ResourcingApi.ResourcingJob
             if (data.Assigned.HasValue)
             {
                 job.Assigned = data.Assigned.Value;
+            }
+
+            if (data.Temps != null && data.Temps.Count != 0)
+            {
+                if (job.Temps == null)
+                {
+                    job.Temps = new List<Temp>();
+                }
+
+                foreach (var temp in data.Temps)
+                {
+                    if (!job.Temps.Contains(temp))
+                    {
+                        job.Temps.Add(temp);
+                        
+                        // Also add the job to the temp
+                        if (temp.Jobs == null)
+                        {
+                            temp.Jobs = new List<Job>();
+                        }
+                        temp.Jobs.Add(job);
+                    }
+                }
+
+                job.Assigned = true;
             }
 
             await _repo.UpdateJobById(job);
