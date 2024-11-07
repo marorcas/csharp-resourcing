@@ -13,8 +13,11 @@ const JobCard = ({ job, onClick }: JobCardProps) => {
       onClick={() => onClick(job)}
     >
         <p>{job.name}</p>
-        <p>{job.startDate}</p>
-        <p>{job.endDate}</p>
+
+        <div className={styles.DatesContainer}>
+          <p className={styles.Date}>Start date: {job.startDate ? job.startDate : "not set"}</p>
+          <p className={styles.Date}>End date: {job.endDate ? job.endDate : "not set"}</p>
+        </div>
     </li>
   )
 }

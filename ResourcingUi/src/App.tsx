@@ -34,6 +34,7 @@ function App() {
                     path='/people' 
                     element={<PageWrapper><PeoplePage/></PageWrapper>}
                   />
+
                 </Routes>
 
               </BrowserRouter>

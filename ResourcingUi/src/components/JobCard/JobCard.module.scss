@@ -2,7 +2,13 @@
     display: flex;
     gap: 2em;
     padding: 1em;
+    margin: 1em;
+    border: 1px solid rgb(black, 0.2);
     &:hover {
         cursor: pointer;
     }
+}
+
+.Date {
+    font-size: small;
 }

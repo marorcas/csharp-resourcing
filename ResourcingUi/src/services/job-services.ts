@@ -5,8 +5,8 @@ const apiBaseUrl = "http://localhost:5180/jobs";
 export interface JobResponse {
     id: number;
     name: string;
-    startDate: string;
-    endDate: string;
+    startDate: string | null;
+    endDate: string | null;
 }
 
 export const createJob = async (data: JobFormData) => {
@@ -37,6 +37,22 @@ export const getAllJobs = async () => {
     }
 
     return data as JobResponse[];
+}
+
+export const updateJobById = async (id: number, data: JobFormData) => {
+    const response = await fetch(`${apiBaseUrl}/${id}`, {
+        method: 'PATCH',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+  
+    if (!response.ok) {
+        throw new Error('Something went wrong');
+    }
+
+    return await response.json();
 }
 
 export const deleteJobById = async (id: number) => {

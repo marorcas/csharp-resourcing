@@ -1,20 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import JobCard from "../../components/JobCard/JobCard";
 import styles from "./JobsPage.module.scss";
-import { createJob, getAllJobs, JobResponse } from "../../services/job-services";
+import { createJob, getAllJobs, JobResponse, updateJobById } from "../../services/job-services";
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 import { JobsContext } from "../../contexts/JobsContextProvider/JobsContextProvider";
 import JobForm from "../../components/JobForm/JobForm";
 import { JobFormData } from "../../components/JobForm/schema";
-import { formatDate } from "../../services/format";
+import { filterOption, filterOptionType, sortJobs } from "../../services/format";
 
-const filterOption = {
-  NAME: 'Name',
-  STARTDATE: 'Start Date',
-  ENDDATE: 'End Date'
-}
-
-type filterOptionType = typeof filterOption[keyof typeof filterOption];
 
 const JobsPage = () => {
   const jobsContext = useContext(JobsContext);
@@ -23,58 +16,10 @@ const JobsPage = () => {
   }
   const { jobs, setJobs } = jobsContext;
 
-  const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.NAME);
-
-  useEffect(() => {
-    getAllJobs()
-      .then((data) => {
-        const orderedData = data.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-        setJobs(orderedData);
-      })
-      .catch((e) => console.warn(e));
-  }, []);
-
-  useEffect(() => {
-    const sortedJobs = [...jobs];
-    if (selectedFilter === filterOption.STARTDATE) {
-      sortedJobs.sort((a, b) => {
-        const dateA = a.startDate ? new Date(formatDate(a.startDate)).getTime() : null;
-        const dateB = b.startDate ? new Date(formatDate(b.startDate)).getTime(): null;
-
-        // If both dates are null, they are equal
-        if (dateA === null && dateB === null) return 0;
-
-        // If one date is null, push the one with the date to the top
-        if (dateA === null) return 1;
-        if (dateB === null) return -1;
-
-        // Otherwise, compare the dates
-        return dateA - dateB;
-      })
-    } else if (selectedFilter === filterOption.ENDDATE) {
-      sortedJobs.sort((a, b) => {
-        const dateA = a.endDate ? new Date(formatDate(a.endDate)).getTime() : null;
-        const dateB = b.endDate ? new Date(formatDate(b.endDate)).getTime(): null;
-
-        // If both dates are null, they are equal
-        if (dateA === null && dateB === null) return 0;
-
-        // If one date is null, push the one with the date to the top
-        if (dateA === null) return 1;
-        if (dateB === null) return -1;
-
-        // Otherwise, compare the dates
-        return dateA - dateB;
-      })
-    } else {
-      sortedJobs.sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
-    }
-
-    setJobs(sortedJobs);
-  }, [selectedFilter]);
-
   const [selectedJob, setSelectedJob] = useState<JobResponse | null>(null);
+  const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.NAME);
   const [isCreateJobFormOpen, setIsCreateJobFormOpen] = useState<boolean>(false);
+  const [isEditJobFormOpen, setIsEditJobFormOpen] = useState<boolean>(false);
 
   const handleJobClick = (job: JobResponse) => {
     setSelectedJob(job);
@@ -83,6 +28,10 @@ const JobsPage = () => {
   const handleCloseJob = () => {
     setSelectedJob(null);
   }
+
+  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFilter(event.target.value);
+  };
   
   const handleCreateJobBtnClick = () => {
     setIsCreateJobFormOpen(true);
@@ -91,19 +40,49 @@ const JobsPage = () => {
   const handleCloseCreateJobForm = () => {
     setIsCreateJobFormOpen(false);
   }
+
+  const handleEditJobBtnClick = () => {
+    setIsEditJobFormOpen(true);
+  }
+
+  const handleCloseEditJobForm = () => {
+    setIsEditJobFormOpen(false);
+  }
     
-  const onSubmit = async (data: JobFormData) => {
+  const onCreateSubmit = async (data: JobFormData) => {
     createJob(data)
       .then((job) => {
-        setJobs([...jobs, job]);
+        const updatedJobs = [...jobs, job];
+        const sortedUpdatedJobs = sortJobs(updatedJobs, selectedFilter);
+        setJobs(sortedUpdatedJobs);
         console.log(job);
       })
       .catch((e) => console.log(e));
   }
+  
+  const onEditSubmit = async (id: number, data: JobFormData) => {
+    updateJobById(id, data)
+      .then(() => {
+          const updatedJobs = jobs.map((job) => job.id === id ? { ...job, ...data } : job);
+          const sortedUpdatedJobs = sortJobs(updatedJobs, selectedFilter);
+          setJobs(sortedUpdatedJobs);
+      })
+      .catch((e) => console.log(e));
+  }
 
-  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedFilter(event.target.value);
-  };
+  useEffect(() => {
+    getAllJobs()
+      .then((data) => {
+        const orderedData = sortJobs(data, selectedFilter);
+        setJobs(orderedData);
+      })
+      .catch((e) => console.warn(e));
+  }, []);
+
+  useEffect(() => {
+    const sortedJobs = [...jobs];
+    setJobs(sortJobs(sortedJobs, selectedFilter));
+  }, [selectedFilter]);
 
   return (
     <div className={styles.JobsPage}>
@@ -134,9 +113,42 @@ const JobsPage = () => {
 
       {selectedJob ? (
         <div className={styles.JobPopUp}>
-          <h2>{selectedJob.name}</h2>
-          <p>Job Details</p>
-          <button onClick={handleCloseJob}>Close</button>
+          {isEditJobFormOpen ? ( 
+            <div className={styles.CreateJobFormPopUp}>
+              <h2>Edit Job</h2>
+
+              <JobForm 
+                formType="EDIT"
+                defaultValues={selectedJob}
+                onSubmit={(data) => onEditSubmit(selectedJob.id, data)}
+              />
+
+              <button
+                className={styles.Button}
+                onClick={handleCloseEditJobForm}
+              >
+                Close
+              </button>
+            </div>
+          ) : (
+            <div className={styles.JobInfo}>
+              <h2>{selectedJob.name}</h2>
+              <p>Start date: {selectedJob.startDate ? selectedJob.startDate : "not set"}</p>
+              <p>End date: {selectedJob.endDate ? selectedJob.endDate : "not set"}</p>
+              <button 
+                className={styles.Button}
+                onClick={handleEditJobBtnClick}
+              >
+                Edit
+              </button>
+              <button 
+                className={styles.Button}
+                onClick={handleCloseJob}
+              >
+                Close
+              </button>
+            </div>
+          )}
         </div>
       ) : (
         <div className={styles.CreateJobContainer}>
@@ -144,7 +156,7 @@ const JobsPage = () => {
             <div className={styles.CreateJobFormPopUp}>
               <h2>Create New Job</h2>
 
-              <JobForm onSubmit={onSubmit}/>
+              <JobForm onSubmit={onCreateSubmit}/>
 
               <button
               className={styles.Button}
