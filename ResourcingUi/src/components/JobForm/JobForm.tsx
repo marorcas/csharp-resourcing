@@ -1,10 +1,14 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { schema, JobFormData } from "./schema";
+import { Controller, useForm } from "react-hook-form";
+import { jobSchema, JobFormData } from "./jobSchema";
 import styles from "./JobForm.module.scss";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
+import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextProvider";
+import Select from "react-select/base";
+import { TempResponse } from "../../services/temp-services";
+import { tempSchema } from "../TempForm/tempSchema";
 
 type FormType = 'ADD' | 'EDIT';
 
@@ -23,13 +27,27 @@ const JobForm = ({
     const {
         reset,
         register, 
+        control,
+        setValue,
         formState: { errors, isSubmitSuccessful }, 
         handleSubmit,
-    } = useForm<JobFormData>({ resolver: zodResolver(schema), defaultValues });
+    } = useForm<JobFormData>({ resolver: zodResolver(jobSchema), defaultValues });
+
+    const tempContext = useContext(TempsContext);
+    if (tempContext === undefined) {
+        throw new Error("Something went wrong");
+    }
+    const { temps } = tempContext;
+    const tempOptions = temps.map((temp) => ({
+        value: temp.id,
+        label: `${temp.firstName} ${temp.lastName}`
+      }));
    
     const [name, setName] = useState<string>(defaultValues.name);
     const [startDate, setStartDate] = useState<string | null | undefined>(defaultValues.startDate);
     const [endDate, setEndDate] = useState<string | null | undefined>(defaultValues.endDate);
+    const [selectedTemps, setSelectedTemps] = useState<number[]>([]);
+    const [searchTerm, setSearchTerm] = useState<string>("");
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
@@ -42,6 +60,10 @@ const JobForm = ({
     const handleEndDateChange = (date: Date | null) => {
         setEndDate(date ? date.toISOString().split('T')[0] : null);
     }
+
+    const handleSelectChange = (selectedTemps: any) => {
+        setSelectedTemps(selectedTemps || null);
+      };
 
     isSubmitSuccessful && reset();
 
@@ -99,6 +121,20 @@ const JobForm = ({
                             {errors.endDate.message}
                         </small>
                     }
+                </div>
+
+                <div>
+                    <h2>Assign to</h2>
+                    <Select
+                        isMulti
+                        options={tempOptions} // Options for the dropdown
+                        value={defaultValues.temps} // Current selected values
+                        onChange={handleSelectChange} // Handler for when selections change
+                        getOptionLabel={(e: any) => e.label} // To display the label for each option
+                        getOptionValue={(e: any) => e.value} // The value to use for each option
+                        placeholder="Select temps"
+                    />
+                    {errors.temps && <p>{errors.temps.message}</p>}
                 </div>
 
                 <div className={styles.Buttons}>

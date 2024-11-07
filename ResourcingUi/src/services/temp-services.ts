@@ -1,4 +1,4 @@
-import { TempFormData } from "../components/TempForm/schema";
+import { TempFormData } from "../components/TempForm/tempSchema";
 
 const apiBaseUrl = "http://localhost:5180/temps";
 

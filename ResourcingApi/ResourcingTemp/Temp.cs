@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using ResourcingApi.Models;
 using ResourcingApi.ResourcingJob;
 
 namespace ResourcingApi.ResourcingTemp {
@@ -9,6 +10,8 @@ namespace ResourcingApi.ResourcingTemp {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         [JsonIgnore]
-        public List<Job>? Jobs { get; set; }
+        public List<JobTemp>? JobTemps { get; set; }
+        [JsonIgnore]
+        public List<Job>? Jobs => JobTemps?.Select(jt => jt.Job).ToList();
     }
 }

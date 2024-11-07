@@ -4,7 +4,7 @@ import { createTemp, getAllTemps, TempResponse, updateTempById } from "../../ser
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 import PersonCard from "../../components/PersonCard/PersonCard";
 import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextProvider";
-import { TempFormData } from "../../components/TempForm/schema";
+import { TempFormData } from "../../components/TempForm/tempSchema";
 import TempForm from "../../components/TempForm/TempForm";
 import { sortTemps } from "../../services/temp-format";
 

@@ -1,4 +1,4 @@
-using ResourcingApi.ResourcingJob;
+using ResourcingApi.Models;
 
 namespace ResourcingApi.ResourcingTemp
 {
@@ -6,6 +6,6 @@ namespace ResourcingApi.ResourcingTemp
     {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
-        public List<Job>? Jobs { get; set; }
+        public List<long>? JobIds { get; set; }
     }
 }

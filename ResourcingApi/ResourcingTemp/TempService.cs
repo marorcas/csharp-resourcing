@@ -49,30 +49,6 @@ namespace ResourcingApi.ResourcingTemp
                 temp.LastName = data.LastName;
             }
 
-            if (data.Jobs != null && data.Jobs.Count != 0)
-            {
-                if (temp.Jobs == null)
-                {
-                    temp.Jobs = new List<Job>();
-                }
-
-                foreach (var job in data.Jobs)
-                {
-                    if (!temp.Jobs.Contains(job))
-                    {
-                        temp.Jobs.Add(job);
-                        
-                        // Also add the temp to the job
-                        if (job.Temps == null)
-                        {
-                            job.Temps = new List<Temp>();
-                        }
-                        job.Temps.Add(temp);
-                        job.Assigned = true;
-                    }
-                }
-            }
-
             await _repo.UpdateTempById(temp);
             return temp;
         }

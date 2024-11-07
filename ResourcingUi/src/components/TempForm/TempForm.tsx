@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { schema, TempFormData } from "./schema";
+import { tempSchema, TempFormData } from "./tempSchema";
 import styles from "./TempForm.module.scss";
 import { useState } from "react";
 import 'react-datepicker/dist/react-datepicker.css';
@@ -24,7 +24,7 @@ const TempForm = ({
         register, 
         formState: { errors, isSubmitSuccessful }, 
         handleSubmit,
-    } = useForm<TempFormData>({ resolver: zodResolver(schema), defaultValues });
+    } = useForm<TempFormData>({ resolver: zodResolver(tempSchema), defaultValues });
    
     const [firstName, setFirstName] = useState<string>(defaultValues.firstName);
     const [lastName, setLastName] = useState<string>(defaultValues.lastName);

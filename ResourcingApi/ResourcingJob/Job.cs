@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
+using ResourcingApi.Models;
 using ResourcingApi.ResourcingTemp;
 
 namespace ResourcingApi.ResourcingJob 
@@ -14,6 +15,9 @@ namespace ResourcingApi.ResourcingJob
         [JsonConverter(typeof(DateTimeConverter))]
         public DateTime? EndDate { get; set; }
         public bool Assigned { get; set; }
-        public List<Temp>? Temps { get; set; }
+        [JsonIgnore]
+        public List<JobTemp>? JobTemps { get; set; }
+        [JsonIgnore]
+        public List<Temp>? Temps => JobTemps?.Select(jt => jt.Temp).ToList();
     }
 }

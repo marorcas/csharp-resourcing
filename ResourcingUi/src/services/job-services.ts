@@ -1,4 +1,5 @@
-import { JobFormData } from "../components/JobForm/schema";
+import { JobFormData } from "../components/JobForm/jobSchema";
+import { TempResponse } from "./temp-services";
 
 const apiBaseUrl = "http://localhost:5180/jobs";
 
@@ -7,6 +8,7 @@ export interface JobResponse {
     name: string;
     startDate: string | null;
     endDate: string | null;
+    temps: TempResponse[] | null;
 }
 
 export const createJob = async (data: JobFormData) => {

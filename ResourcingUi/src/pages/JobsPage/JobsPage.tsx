@@ -5,7 +5,7 @@ import { createJob, getAllJobs, JobResponse, updateJobById } from "../../service
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 import { JobsContext } from "../../contexts/JobsContextProvider/JobsContextProvider";
 import JobForm from "../../components/JobForm/JobForm";
-import { JobFormData } from "../../components/JobForm/schema";
+import { JobFormData } from "../../components/JobForm/jobSchema";
 import { filterOption, filterOptionType, sortJobs } from "../../services/job-format";
 
 

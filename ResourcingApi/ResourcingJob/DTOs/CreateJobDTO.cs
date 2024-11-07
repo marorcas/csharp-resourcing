@@ -1,4 +1,4 @@
-using ResourcingApi.ResourcingTemp;
+using ResourcingApi.Models;
 
 namespace ResourcingApi.ResourcingJob
 {
@@ -8,6 +8,6 @@ namespace ResourcingApi.ResourcingJob
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public bool Assigned { get; set; }
-        public List<Temp>? Temps { get; set; }
+        public List<long>? TempIds { get; set; }
     }
 }
