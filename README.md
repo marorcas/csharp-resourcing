@@ -102,3 +102,7 @@ Planned future features and improvements:
 - Created form to edit job
 - Created form to edit temp
 - Implemented many to many relationship functionality in backend
+
+### 8/11/2024
+
+- Created a database seeder to generate fake data using Bogus

@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using ResourcingApi.Data;
+using ResourcingApi.ResourcingTemp;
 
 namespace ResourcingApi.ResourcingJob
 {

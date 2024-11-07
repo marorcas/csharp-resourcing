@@ -1,14 +1,11 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { jobSchema, JobFormData } from "./jobSchema";
 import styles from "./JobForm.module.scss";
 import { useContext, useState } from "react";
 import DatePicker from "react-datepicker";
 import 'react-datepicker/dist/react-datepicker.css';
 import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextProvider";
-import Select from "react-select/base";
-import { TempResponse } from "../../services/temp-services";
-import { tempSchema } from "../TempForm/tempSchema";
 
 type FormType = 'ADD' | 'EDIT';
 
@@ -27,8 +24,6 @@ const JobForm = ({
     const {
         reset,
         register, 
-        control,
-        setValue,
         formState: { errors, isSubmitSuccessful }, 
         handleSubmit,
     } = useForm<JobFormData>({ resolver: zodResolver(jobSchema), defaultValues });
@@ -38,32 +33,52 @@ const JobForm = ({
         throw new Error("Something went wrong");
     }
     const { temps } = tempContext;
-    const tempOptions = temps.map((temp) => ({
-        value: temp.id,
-        label: `${temp.firstName} ${temp.lastName}`
-      }));
    
     const [name, setName] = useState<string>(defaultValues.name);
     const [startDate, setStartDate] = useState<string | null | undefined>(defaultValues.startDate);
     const [endDate, setEndDate] = useState<string | null | undefined>(defaultValues.endDate);
-    const [selectedTemps, setSelectedTemps] = useState<number[]>([]);
+    const [tempIds, setTempIds] = useState<number[] | null | undefined>(defaultValues.tempIds);
     const [searchTerm, setSearchTerm] = useState<string>("");
 
     const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setName(event.target.value);
-    }
+    };
 
     const handleStartDateChange = (date: Date | null) => {
         setStartDate(date ? date.toISOString().split('T')[0] : null);
-    }
+    };
 
     const handleEndDateChange = (date: Date | null) => {
         setEndDate(date ? date.toISOString().split('T')[0] : null);
-    }
+    };
 
-    const handleSelectChange = (selectedTemps: any) => {
-        setSelectedTemps(selectedTemps || null);
-      };
+    // Filter temps based on search term
+    const filteredTemps = temps.filter(
+        (temp) =>
+        temp.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        temp.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    // Handle search input change
+    const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setSearchTerm(e.target.value);
+    };
+
+    // Handle adding a temp to the selected list
+    const handleAddTemp = (tempId: number) => {
+        if (tempIds && !tempIds.includes(tempId)) {
+            setTempIds([...tempIds, tempId]);
+        } else {
+            setTempIds([tempId]);
+        }
+    };
+
+    // Handle removing a temp from the selected list
+    const handleRemoveTemp = (tempId: number) => {
+        if (tempIds) {
+            setTempIds(tempIds.filter((id) => id !== tempId));
+        }
+    };
 
     isSubmitSuccessful && reset();
 
@@ -71,7 +86,7 @@ const JobForm = ({
         <>
             <form 
             className={styles.Form} 
-            onSubmit={handleSubmit(() => onSubmit({ name, startDate, endDate }))}
+            onSubmit={handleSubmit(() => onSubmit({ name, startDate, endDate, tempIds }))}
             >
 
                 <div className={styles.Field}>
@@ -124,7 +139,7 @@ const JobForm = ({
                 </div>
 
                 <div>
-                    <h2>Assign to</h2>
+                    {/* <h2>Assign to</h2>
                     <Select
                         isMulti
                         options={tempOptions} // Options for the dropdown
@@ -134,7 +149,56 @@ const JobForm = ({
                         getOptionValue={(e: any) => e.value} // The value to use for each option
                         placeholder="Select temps"
                     />
-                    {errors.temps && <p>{errors.temps.message}</p>}
+                    {errors.temps && <p>{errors.temps.message}</p>} */}
+
+                    <h3>Assign to</h3>
+
+                    {/* Search bar */}
+                    <input
+                    type="text"
+                    placeholder="Search for people..."
+                    value={searchTerm}
+                    onChange={handleSearchChange}
+                    />
+
+                    {/* Filtered temps list */}
+                    <div>
+                    <h4>Available People</h4>
+                    <ul>
+                        {filteredTemps.map((temp) => (
+                        <li key={temp.id}>
+                            {temp.firstName} {temp.lastName}{" "}
+                            <button
+                            type="button"
+                            onClick={() => handleAddTemp(temp.id)}
+                            >
+                            Add
+                            </button>
+                        </li>
+                        ))}
+                    </ul>
+                    </div>
+
+                    {/* List of selected temps */}
+                    <div>
+                    <h4>Selected Temps</h4>
+                    <ul>
+                        {tempIds?.map((tempId) => {
+                        const temp = temps.find((t) => t.id === tempId);
+                        return (
+                            <li key={tempId}>
+                            {temp?.firstName} {temp?.lastName}{" "}
+                            <button
+                                type="button"
+                                onClick={() => handleRemoveTemp(tempId)}
+                            >
+                                Remove
+                            </button>
+                            </li>
+                        );
+                        })}
+                    </ul>
+                    </div>
                 </div>
 
                 <div className={styles.Buttons}>

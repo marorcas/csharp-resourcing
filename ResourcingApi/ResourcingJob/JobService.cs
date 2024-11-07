@@ -70,6 +70,14 @@ namespace ResourcingApi.ResourcingJob
             return jobs.Where(job => job.Assigned == assigned).ToList();
         }
 
+        public async Task<List<Temp>?> GetAssignedTemps(long id)
+        {
+            var job = await _jobRepo.GetJobById(id);
+            if (job == null || job.Temps == null) return null; 
+
+            return job.Temps;
+        }
+
         public async Task<Job?> UpdateJobById(long id, UpdateJobDTO data)
         {
             var job = await _jobRepo.GetJobById(id);
@@ -101,9 +109,6 @@ namespace ResourcingApi.ResourcingJob
                 {
                     job.JobTemps = new List<JobTemp>();
                 }
-
-                // var existingTempIds = job.Temps?.Select(t => t.Id).ToList();
-                // var tempsToAdd = data.TempIds.Where(id => !existingTempIds.Contains(id)).ToList();
 
                 foreach (var tempId in data.TempIds)
                 {

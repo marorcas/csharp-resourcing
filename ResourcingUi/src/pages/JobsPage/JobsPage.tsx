@@ -135,6 +135,7 @@ const JobsPage = () => {
               <h2>{selectedJob.name}</h2>
               <p>Start date: {selectedJob.startDate ? selectedJob.startDate : "not set"}</p>
               <p>End date: {selectedJob.endDate ? selectedJob.endDate : "not set"}</p>
+              <p>Assigned to: {selectedJob.temps ? selectedJob.temps.map(person => `${person.firstName} ${person.lastName}`).join(', ') : "none"}</p>
               <button 
                 className={styles.Button}
                 onClick={handleEditJobBtnClick}

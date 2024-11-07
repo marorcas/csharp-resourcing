@@ -15,9 +15,8 @@ namespace ResourcingApi.ResourcingJob
         [JsonConverter(typeof(DateTimeConverter))]
         public DateTime? EndDate { get; set; }
         public bool Assigned { get; set; }
-        [JsonIgnore]
-        public List<JobTemp>? JobTemps { get; set; }
-        [JsonIgnore]
+        public List<JobTemp>? JobTemps { get; set; } = new List<JobTemp>();
+        [JsonPropertyName("temps")]
         public List<Temp>? Temps => JobTemps?.Select(jt => jt.Temp).ToList();
     }
 }

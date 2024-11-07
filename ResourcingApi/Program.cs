@@ -25,6 +25,7 @@ builder.Services.AddScoped<IJobRepository, JobRepository>();
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<ITempRepository, TempRepository>();
 builder.Services.AddScoped<ITempService, TempService>();
+builder.Services.AddScoped<FakeDataSeeder>(); 
 
 builder.Services.AddControllers();
 
@@ -46,6 +47,10 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ResourcingDbContext>();
     context.Database.Migrate();
+
+    // Get the seeder and run it
+    var seeder = scope.ServiceProvider.GetRequiredService<FakeDataSeeder>();
+    seeder.Seed();  // Run the seeding logic
 }
 
 // Add CORS middleware before routing

@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "iaquQPUVWg8=",
+  "dgSpecHash": "TQdw/utdlO4=",
   "success": true,
   "projectFilePath": "C:\\Users\\ortzm\\Documents\\nology\\csharp-resourcing\\ResourcingApi\\ResourcingApi.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\ortzm\\.nuget\\packages\\bogus\\35.6.1\\bogus.35.6.1.nupkg.sha512",
     "C:\\Users\\ortzm\\.nuget\\packages\\bouncycastle.cryptography\\2.3.1\\bouncycastle.cryptography.2.3.1.nupkg.sha512",
     "C:\\Users\\ortzm\\.nuget\\packages\\google.protobuf\\3.26.1\\google.protobuf.3.26.1.nupkg.sha512",
     "C:\\Users\\ortzm\\.nuget\\packages\\humanizer.core\\2.14.1\\humanizer.core.2.14.1.nupkg.sha512",

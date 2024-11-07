@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ResourcingApi.ResourcingTemp;
 
 namespace ResourcingApi.ResourcingJob
 {
@@ -39,6 +40,13 @@ namespace ResourcingApi.ResourcingJob
             var job = await _jobService.GetJobById(id);
             if (job == null) return NotFound();
             return Ok(job);
+        }
+
+        [HttpGet("{id}/assignedto")]
+        public async Task<ActionResult<List<Temp>>> GetAssignedTo(long id)
+        {
+            var temps = await _jobService.GetAssignedTemps(id);
+            return Ok(temps);
         }
 
         [HttpPatch("{id}")]
