@@ -7,6 +7,13 @@ import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextPr
 import { TempFormData } from "../../components/TempForm/schema";
 import TempForm from "../../components/TempForm/TempForm";
 
+const filterOption = {
+  FIRSTNAME: 'First Name',
+  LASTNAME: 'Last Name'
+}
+
+type filterOptionType = typeof filterOption[keyof typeof filterOption];
+
 const PeoplePage = () => {
   const tempsContext = useContext(TempsContext);
   if (tempsContext === undefined) {
@@ -14,13 +21,27 @@ const PeoplePage = () => {
   }
   const { temps, setTemps } = tempsContext;
 
+  const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.FIRSTNAME);
+
   useEffect(() => {
     getAllTemps()
       .then((data) => {
-        setTemps(data);
+        const orderedData = data.sort((a, b) => a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase()));
+        setTemps(orderedData);
       })
       .catch((e) => console.warn(e));
   }, []);
+
+  useEffect(() => {
+    const sortedTemps = [...temps];
+    if (selectedFilter === filterOption.LASTNAME) {
+      sortedTemps.sort((a, b) => a.lastName.toLowerCase().localeCompare(b.lastName.toLowerCase()));
+    } else {
+      sortedTemps.sort((a, b) => a.firstName.toLowerCase().localeCompare(b.firstName.toLowerCase()));
+    }
+
+    setTemps(sortedTemps);
+  }, [selectedFilter]);
 
   const [selectedPerson, setSelectedPerson] = useState<TempResponse | null>(null);
   const [isCreateTempFormOpen, setIsCreateTempFormOpen] = useState<boolean>(false);
@@ -50,12 +71,29 @@ const PeoplePage = () => {
       .catch((e) => console.log(e));
   }
 
+  const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedFilter(event.target.value);
+  };
+
   return (
     <div className={styles.PeoplePage}>
       <div className={styles.MainSection}>
         <h2>People</h2>
         <p>Search Bar</p>
-        <p>Filter By</p>
+        
+        <div className={styles.Filter}>
+          <label htmlFor="filterBy">Filter by:</label>
+          <select
+            id="filterBy"
+            value={selectedFilter}
+            onChange={handleFilterChange}
+            className={styles.FilterDropdown}
+          >
+            <option value={filterOption.FIRSTNAME}>{filterOption.FIRSTNAME}</option>
+            <option value={filterOption.LASTNAME}>{filterOption.LASTNAME}</option>
+          </select>
+        </div>
+
         <ListWrapper>
           {temps.map((person) => 
             <PersonCard key={person.id} person={person} onClick={handlePersonClick}/>

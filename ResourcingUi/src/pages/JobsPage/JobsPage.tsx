@@ -71,7 +71,7 @@ const JobsPage = () => {
     }
 
     setJobs(sortedJobs);
-  }, [selectedFilter])
+  }, [selectedFilter]);
 
   const [selectedJob, setSelectedJob] = useState<JobResponse | null>(null);
   const [isCreateJobFormOpen, setIsCreateJobFormOpen] = useState<boolean>(false);

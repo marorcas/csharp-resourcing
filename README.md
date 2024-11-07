@@ -98,3 +98,4 @@ Planned future features and improvements:
 
 - Created a context for selected link for the side bar
 - Created filter feature for jobs
+- Created filter feature for temps
