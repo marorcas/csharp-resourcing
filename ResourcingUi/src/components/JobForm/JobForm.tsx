@@ -85,10 +85,9 @@ const JobForm = ({
     return(
         <>
             <form 
-            className={styles.Form} 
-            onSubmit={handleSubmit(() => onSubmit({ name, startDate, endDate, tempIds }))}
+                className={styles.Form} 
+                onSubmit={handleSubmit(() => onSubmit({ name, startDate, endDate, tempIds }))}
             >
-
                 <div className={styles.Field}>
                     <label htmlFor="name">Name</label>
                     <input 
@@ -138,66 +137,55 @@ const JobForm = ({
                     }
                 </div>
 
-                <div>
-                    {/* <h2>Assign to</h2>
-                    <Select
-                        isMulti
-                        options={tempOptions} // Options for the dropdown
-                        value={defaultValues.temps} // Current selected values
-                        onChange={handleSelectChange} // Handler for when selections change
-                        getOptionLabel={(e: any) => e.label} // To display the label for each option
-                        getOptionValue={(e: any) => e.value} // The value to use for each option
-                        placeholder="Select temps"
-                    />
-                    {errors.temps && <p>{errors.temps.message}</p>} */}
+                <div className={styles.Field}>
+                    <label htmlFor="search">Assign to</label>
 
-                    <h3>Assign to</h3>
-
-                    {/* Search bar */}
                     <input
-                    type="text"
-                    placeholder="Search for people..."
-                    value={searchTerm}
-                    onChange={handleSearchChange}
+                        className={styles.SearchBar}
+                        type="text"
+                        id="search"
+                        placeholder="Search for people..."
+                        value={searchTerm}
+                        onChange={handleSearchChange}
                     />
+                </div>
 
+                <div className={styles.AssignToContainer}>
                     {/* Filtered temps list */}
-                    <div>
-                    <h4>Available People</h4>
-                    <ul>
-                        {filteredTemps.map((temp) => (
-                        <li key={temp.id}>
-                            {temp.firstName} {temp.lastName}{" "}
-                            <button
-                            type="button"
-                            onClick={() => handleAddTemp(temp.id)}
-                            >
-                            Add
-                            </button>
-                        </li>
-                        ))}
-                    </ul>
+                    <div className={styles.AssignToList}>
+                        <ul>
+                            {filteredTemps.map((temp) => (
+                            <li key={temp.id}>
+                                {temp.firstName} {temp.lastName}{" "}
+                                <button
+                                type="button"
+                                onClick={() => handleAddTemp(temp.id)}
+                                >
+                                Add
+                                </button>
+                            </li>
+                            ))}
+                        </ul>
                     </div>
 
                     {/* List of selected temps */}
-                    <div>
-                    <h4>Selected Temps</h4>
-                    <ul>
-                        {tempIds?.map((tempId) => {
-                        const temp = temps.find((t) => t.id === tempId);
-                        return (
-                            <li key={tempId}>
-                            {temp?.firstName} {temp?.lastName}{" "}
-                            <button
-                                type="button"
-                                onClick={() => handleRemoveTemp(tempId)}
-                            >
-                                Remove
-                            </button>
-                            </li>
-                        );
-                        })}
-                    </ul>
+                    <div className={styles.SelectedTemps}>
+                        <ul id="selectedTemps">
+                            {tempIds?.map((tempId) => {
+                            const temp = temps.find((t) => t.id === tempId);
+                            return (
+                                <li key={tempId}>
+                                {temp?.firstName} {temp?.lastName}{" "}
+                                <button
+                                    type="button"
+                                    onClick={() => handleRemoveTemp(tempId)}
+                                >
+                                    Remove
+                                </button>
+                                </li>
+                            );
+                            })}
+                        </ul>
                     </div>
                 </div>
 

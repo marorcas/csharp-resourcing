@@ -8,6 +8,7 @@ export interface JobResponse {
     name: string;
     startDate: string | null;
     endDate: string | null;
+    assigned: boolean;
     temps: TempResponse[] | null;
 }
 

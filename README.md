@@ -106,3 +106,4 @@ Planned future features and improvements:
 ### 8/11/2024
 
 - Created a database seeder to generate fake data using Bogus
+- Created two chart components to display insights of data on the frontend

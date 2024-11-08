@@ -2,9 +2,12 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    align-items: center;
     gap: 1em;
     padding: 0.25em;
-    width: 50%;
+    width: 80%;
+    height: min-content;
+    overflow-y: auto;
 }
 
 .Field {
@@ -26,9 +29,37 @@
 .Button {
     margin: 1em;
     border: 1px solid rgb(black, 0.2);
+    font-size: small;
 }
 
 input {
     border-radius: 5px;
     border: 1px solid rgb(black, 0.2);
+}
+
+.AssignToContainer {
+    display: flex;
+    flex-direction: column;
+}
+
+.AssignToList {
+    display: flex;
+    flex-direction: column;
+    max-height: 50px;
+    overflow-y: auto;
+    font-size: smaller;
+    border: 1px solid rgb(black, 0.2);
+}
+
+.SelectedTemps {
+    display: flex;
+    flex-direction: column;
+    max-height: 50px;
+    overflow-y: auto;
+    font-size: smaller;
+    border: 1px solid rgb(black, 0.2);
+}
+
+label {
+    font-size: small;
 }

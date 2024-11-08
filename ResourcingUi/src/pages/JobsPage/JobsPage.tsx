@@ -115,7 +115,7 @@ const JobsPage = () => {
         <div className={styles.JobPopUp}>
           {isEditJobFormOpen ? ( 
             <div className={styles.CreateJobFormPopUp}>
-              <h2>Edit Job</h2>
+              <h3>Edit Job</h3>
 
               <JobForm 
                 formType="EDIT"
@@ -155,8 +155,7 @@ const JobsPage = () => {
         <div className={styles.CreateJobContainer}>
           {isCreateJobFormOpen ? ( 
             <div className={styles.CreateJobFormPopUp}>
-              <h2>Create New Job</h2>
-
+              <h3>Create New Job</h3>
               <JobForm onSubmit={onCreateSubmit}/>
 
               <button

@@ -26,7 +26,9 @@ namespace ResourcingApi.ResourcingJob
 
         public async Task<Job?> GetJobById(long id)
         {
-            return await _context.Jobs.FindAsync(id);
+            return await _context.Jobs
+                .Include(j => j.Temps)  // Eager load the related Temps
+                .FirstOrDefaultAsync(j => j.Id == id);  // Use FirstOrDefaultAsync to safely handle null
         }
 
         public async Task UpdateJobById(Job job)

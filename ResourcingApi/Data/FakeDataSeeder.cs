@@ -43,18 +43,29 @@ public class FakeDataSeeder
 
         foreach (var job in jobs)
         {
-            // Each Job gets a random number of Temps (1 to 3)
-            var randomTempCount = random.Next(1, 4); // Randomly pick between 1 and 3 temps per job
-            var tempIds = temps
-                .OrderBy(x => random.Next())  // Shuffle the list of temps
-                .Take(randomTempCount)  // Take the first `randomTempCount` temps
-                .Select(t => t.Id)
-                .ToList();
+            // Decide if this job will have assigned temps or not (50% chance)
+            bool assignTemps = random.NextDouble() < 0.5;  // 50% chance to assign temps
 
-            foreach (var tempId in tempIds)
+            if (assignTemps)
             {
-                jobTemps.Add(new JobTemp { JobId = job.Id, TempId = tempId });
-                job.Assigned = true;
+                // Each Job gets a random number of Temps (1 to 3)
+                var randomTempCount = random.Next(1, 4); // Randomly pick between 1 and 3 temps
+                var tempIds = temps
+                    .OrderBy(x => random.Next())  // Shuffle the list of temps
+                    .Take(randomTempCount)  // Take the first `randomTempCount` temps
+                    .Select(t => t.Id)
+                    .ToList();
+
+                foreach (var tempId in tempIds)
+                {
+                    jobTemps.Add(new JobTemp { JobId = job.Id, TempId = tempId });
+                    job.Assigned = true;  // Mark job as assigned
+                }
+            }
+            else
+            {
+                // If not assigning temps to the job, ensure the job is not marked as assigned
+                job.Assigned = false;
             }
         }
 

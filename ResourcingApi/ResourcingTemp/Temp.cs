@@ -10,7 +10,7 @@ namespace ResourcingApi.ResourcingTemp {
         public required string FirstName { get; set; }
         public required string LastName { get; set; }
         [JsonIgnore]
-        public List<JobTemp>? JobTemps { get; set; }
+        public List<JobTemp>? JobTemps { get; set; } = new List<JobTemp>();
         [JsonIgnore]
         public List<Job>? Jobs => JobTemps?.Select(jt => jt.Job).ToList();
     }

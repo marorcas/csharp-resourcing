@@ -120,7 +120,7 @@ const PeoplePage = () => {
         <div className={styles.TempPopUp}>
           {isEditTempFormOpen ? ( 
             <div className={styles.CreateTempFormPopUp}>
-              <h2>Edit Temp</h2>
+              <h3>Edit Temp</h3>
 
               <TempForm 
                 formType="EDIT"
@@ -157,7 +157,7 @@ const PeoplePage = () => {
         <div className={styles.CreateTempContainer}>
           {isCreateTempFormOpen ? ( 
             <div className={styles.CreateTempFormPopUp}>
-              <h2>Create New Person</h2>
+              <h3>Create New Person</h3>
 
               <TempForm onSubmit={onCreateSubmit}/>
 
