@@ -24,15 +24,19 @@ const PeoplePage = () => {
 
   const [selectedPerson, setSelectedPerson] = useState<TempResponse | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.FIRSTNAME);
+  const [isCreateTempBtnVisible, setIsCreateTempBtnVisible] = useState<boolean>(true);
   const [isCreateTempFormOpen, setIsCreateTempFormOpen] = useState<boolean>(false);
   const [isEditTempFormOpen, setIsEditTempFormOpen] = useState<boolean>(false);
+  const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
 
   const handlePersonClick = (person: TempResponse) => {
     setSelectedPerson(person);
+    setIsCreateTempBtnVisible(false);
   }
 
   const handleClosePerson = () => {
     setSelectedPerson(null);
+    setIsCreateTempBtnVisible(true);
   }
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -41,18 +45,22 @@ const PeoplePage = () => {
 
   const handleCreateTempBtnClick = () => {
     setIsCreateTempFormOpen(true);
+    setIsCreateTempBtnVisible(false);
   }
 
   const handleCloseCreateTempForm = () => {
     setIsCreateTempFormOpen(false);
+    setIsCreateTempBtnVisible(true);
   }
 
   const handleEditTempBtnClick = () => {
     setIsEditTempFormOpen(true);
+    setIsCreateTempBtnVisible(false);
   }
 
   const handleCloseEditTempForm = () => {
     setIsEditTempFormOpen(false);
+    setIsCreateTempBtnVisible(true);
   }
     
   const onCreateSubmit = async (data: TempFormData) => {
@@ -61,6 +69,14 @@ const PeoplePage = () => {
         const updatedTemps = [...temps, temp];
         const sortedUpdatedTemps = sortTemps(updatedTemps, selectedFilter);
         setTemps(sortedUpdatedTemps);
+        setIsCreateTempFormOpen(false);
+        setIsTickVisible(true);
+
+        setTimeout(() => {
+          setIsTickVisible(false);
+          setIsCreateTempFormOpen(false);
+          setIsCreateTempBtnVisible(true);
+        }, 2000);
         console.log(temp);
       })
       .catch((e) => console.log(e));
@@ -72,6 +88,15 @@ const PeoplePage = () => {
           const updatedTemps = temps.map((temp) => temp.id === id ? { ...temp, ...data } : temp);
           const sortedUpdatedTemps = sortTemps(updatedTemps, selectedFilter);
           setTemps(sortedUpdatedTemps);
+          setIsEditTempFormOpen(false);
+          setIsTickVisible(true);
+          setSelectedPerson(null);
+
+          setTimeout(() => {
+            setIsTickVisible(false);
+            setIsCreateTempFormOpen(false);
+            setIsCreateTempBtnVisible(true);
+          }, 2000);
       })
       .catch((e) => console.log(e));
   }
@@ -155,7 +180,7 @@ const PeoplePage = () => {
         </div>
       ) : (
         <div className={styles.CreateTempContainer}>
-          {isCreateTempFormOpen ? ( 
+          {isCreateTempFormOpen && ( 
             <div className={styles.CreateTempFormPopUp}>
               <h3>Create New Person</h3>
 
@@ -168,11 +193,19 @@ const PeoplePage = () => {
                 Close
               </button>
             </div>
-          ) : (
-            <button 
-              className={styles.Button}
-              onClick={handleCreateTempBtnClick}
-            >
+          )}
+
+          {isTickVisible && !isCreateTempBtnVisible && (
+            <div className={styles.SubmissionContainer}>
+              <div className={styles.TickAnimation}>
+                <span>✔</span>
+              </div>
+              <p>Done!</p>
+            </div>
+          )}
+
+          {isCreateTempBtnVisible && !isTickVisible && (
+            <button className={styles.Button} onClick={handleCreateTempBtnClick}>
               Create Person
             </button>
           )}

@@ -115,3 +115,5 @@ Planned future features and improvements:
 ### 13/11/2024
 
 - Added tick animation for successful submission of job forms
+- Added message to tick animation
+- Added tick animation for successful submission of temp forms

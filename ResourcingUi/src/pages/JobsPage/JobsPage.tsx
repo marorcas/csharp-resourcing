@@ -21,7 +21,6 @@ const JobsPage = () => {
   const [isCreateJobBtnVisible, setIsCreateJobBtnVisible] = useState<boolean>(true);
   const [isCreateJobFormOpen, setIsCreateJobFormOpen] = useState<boolean>(false);
   const [isEditJobFormOpen, setIsEditJobFormOpen] = useState<boolean>(false);
-  const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
   const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
 
   const handleJobClick = (job: JobResponse) => {
@@ -64,7 +63,6 @@ const JobsPage = () => {
         const updatedJobs = [...jobs, job];
         const sortedUpdatedJobs = sortJobs(updatedJobs, selectedFilter);
         setJobs(sortedUpdatedJobs);
-        setIsFormSubmitted(true);
         setIsCreateJobFormOpen(false);
         setIsTickVisible(true);
 
@@ -84,7 +82,6 @@ const JobsPage = () => {
           const updatedJobs = jobs.map((job) => job.id === id ? { ...job, ...data } : job);
           const sortedUpdatedJobs = sortJobs(updatedJobs, selectedFilter);
           setJobs(sortedUpdatedJobs);
-          setIsFormSubmitted(true);
           setIsEditJobFormOpen(false);
           setIsTickVisible(true);
           setSelectedJob(null);
@@ -157,14 +154,6 @@ const JobsPage = () => {
               >
                 Close
               </button>
-
-              {isTickVisible && !isCreateJobBtnVisible && (
-                <div className={styles.TickAnimation}>
-                  <span>✔</span>
-                  <p>Edited successfully!</p>
-                </div>
-              )}
-
             </div>
           ) : (
             <div className={styles.JobInfo}>
@@ -204,8 +193,11 @@ const JobsPage = () => {
           )}
 
           {isTickVisible && !isCreateJobBtnVisible && (
-            <div className={styles.TickAnimation}>
-              <span>✔</span>
+            <div className={styles.SubmissionContainer}>
+              <div className={styles.TickAnimation}>
+                  <span>✔</span>
+              </div>
+              <p>Done!</p>
             </div>
           )}
 
