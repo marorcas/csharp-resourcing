@@ -3,9 +3,6 @@ using ResourcingApi.Data;
 using ResourcingApi.Models;
 using ResourcingApi.ResourcingJob;
 using ResourcingApi.ResourcingTemp;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 public class FakeDataSeeder
 {

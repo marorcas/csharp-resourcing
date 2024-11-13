@@ -20,6 +20,7 @@
     "react-hook-form": "^7.53.1",
     "react-router-dom": "^6.27.0",
     "react-select": "^5.8.2",
+    "resourcingui": "file:",
     "zod": "^3.23.8"
   },
   "devDependencies": {

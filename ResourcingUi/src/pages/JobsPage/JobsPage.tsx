@@ -18,15 +18,20 @@ const JobsPage = () => {
 
   const [selectedJob, setSelectedJob] = useState<JobResponse | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.NAME);
+  const [isCreateJobBtnVisible, setIsCreateJobBtnVisible] = useState<boolean>(true);
   const [isCreateJobFormOpen, setIsCreateJobFormOpen] = useState<boolean>(false);
   const [isEditJobFormOpen, setIsEditJobFormOpen] = useState<boolean>(false);
+  const [isFormSubmitted, setIsFormSubmitted] = useState<boolean>(false);
+  const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
 
   const handleJobClick = (job: JobResponse) => {
     setSelectedJob(job);
+    setIsCreateJobBtnVisible(false);
   }
 
   const handleCloseJob = () => {
     setSelectedJob(null);
+    setIsCreateJobBtnVisible(true);
   }
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -35,18 +40,22 @@ const JobsPage = () => {
   
   const handleCreateJobBtnClick = () => {
     setIsCreateJobFormOpen(true);
+    setIsCreateJobBtnVisible(false);
   }
 
   const handleCloseCreateJobForm = () => {
     setIsCreateJobFormOpen(false);
+    setIsCreateJobBtnVisible(true);
   }
 
   const handleEditJobBtnClick = () => {
     setIsEditJobFormOpen(true);
+    setIsCreateJobBtnVisible(false);
   }
 
   const handleCloseEditJobForm = () => {
     setIsEditJobFormOpen(false);
+    setIsCreateJobBtnVisible(true);
   }
     
   const onCreateSubmit = async (data: JobFormData) => {
@@ -55,6 +64,15 @@ const JobsPage = () => {
         const updatedJobs = [...jobs, job];
         const sortedUpdatedJobs = sortJobs(updatedJobs, selectedFilter);
         setJobs(sortedUpdatedJobs);
+        setIsFormSubmitted(true);
+        setIsCreateJobFormOpen(false);
+        setIsTickVisible(true);
+
+        setTimeout(() => {
+          setIsTickVisible(false);
+          setIsCreateJobFormOpen(false);
+          setIsCreateJobBtnVisible(true);
+        }, 2000);
         console.log(job);
       })
       .catch((e) => console.log(e));
@@ -66,6 +84,16 @@ const JobsPage = () => {
           const updatedJobs = jobs.map((job) => job.id === id ? { ...job, ...data } : job);
           const sortedUpdatedJobs = sortJobs(updatedJobs, selectedFilter);
           setJobs(sortedUpdatedJobs);
+          setIsFormSubmitted(true);
+          setIsEditJobFormOpen(false);
+          setIsTickVisible(true);
+          setSelectedJob(null);
+
+          setTimeout(() => {
+            setIsTickVisible(false);
+            setIsCreateJobFormOpen(false);
+            setIsCreateJobBtnVisible(true);
+          }, 2000);
       })
       .catch((e) => console.log(e));
   }
@@ -129,6 +157,14 @@ const JobsPage = () => {
               >
                 Close
               </button>
+
+              {isTickVisible && !isCreateJobBtnVisible && (
+                <div className={styles.TickAnimation}>
+                  <span>✔</span>
+                  <p>Edited successfully!</p>
+                </div>
+              )}
+
             </div>
           ) : (
             <div className={styles.JobInfo}>
@@ -153,7 +189,7 @@ const JobsPage = () => {
         </div>
       ) : (
         <div className={styles.CreateJobContainer}>
-          {isCreateJobFormOpen ? ( 
+          {isCreateJobFormOpen && ( 
             <div className={styles.CreateJobFormPopUp}>
               <h3>Create New Job</h3>
               <JobForm onSubmit={onCreateSubmit}/>
@@ -165,11 +201,16 @@ const JobsPage = () => {
                 Close
               </button>
             </div>
-          ) : (
-            <button 
-              className={styles.Button}
-              onClick={handleCreateJobBtnClick}
-            >
+          )}
+
+          {isTickVisible && !isCreateJobBtnVisible && (
+            <div className={styles.TickAnimation}>
+              <span>✔</span>
+            </div>
+          )}
+
+          {isCreateJobBtnVisible && !isTickVisible && (
+            <button className={styles.Button} onClick={handleCreateJobBtnClick}>
               Create Job
             </button>
           )}

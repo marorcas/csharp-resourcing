@@ -107,3 +107,11 @@ Planned future features and improvements:
 
 - Created a database seeder to generate fake data using Bogus
 - Created two chart components to display insights of data on the frontend
+
+### 11/11/2024
+
+- Created a context for form submission status
+
+### 13/11/2024
+
+- Added tick animation for successful submission of job forms

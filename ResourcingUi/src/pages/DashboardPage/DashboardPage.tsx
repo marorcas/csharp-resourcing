@@ -41,7 +41,7 @@ const DashboardPage = () => {
 
       <JobAssignedChart jobData={jobs}/>
 
-      <JobWeeklyChart jobData={jobs}/>
+      {/* <JobWeeklyChart jobData={jobs}/> */}
     </div>
   )
 }
