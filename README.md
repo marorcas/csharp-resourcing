@@ -119,3 +119,5 @@ Planned future features and improvements:
 - Added tick animation for successful submission of temp forms
 - Added search bar feature to jobs and people pages
 - Added section for jobs due today on the dashboard page
+- Set up xunit testing suite
+- Created github workflows folder
