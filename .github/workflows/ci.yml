@@ -21,11 +21,8 @@ jobs:
       with:
         dotnet-version: '8.0.403'  # Specify the .NET version you're using
 
-    - name: Restore dependencies
-      run: dotnet restore
-
     - name: Build the project
-      run: dotnet build --configuration Release
+      run: dotnet build
 
     - name: Run xUnit tests
-      run: dotnet test --configuration Release --no-build --verbosity normal
+      run: dotnet test
