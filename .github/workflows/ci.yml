@@ -28,4 +28,4 @@ jobs:
       run: dotnet build --configuration Release --no-restore
 
     - name: Run xUnit tests
-      run: dotnet test /ResourcingApi.Tests/ResourcingApi.Tests.csproj --configuration Release --no-build
+      run: dotnet test ./ResourcingApi.Tests/ResourcingApi.Tests.csproj --configuration Release --no-build
