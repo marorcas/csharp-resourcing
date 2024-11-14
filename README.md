@@ -117,3 +117,4 @@ Planned future features and improvements:
 - Added tick animation for successful submission of job forms
 - Added message to tick animation
 - Added tick animation for successful submission of temp forms
+- Added search bar feature to jobs and people pages

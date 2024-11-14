@@ -1,0 +1,15 @@
+.SearchBar {
+    display: flex;
+    justify-content: center;
+    padding: 2em;
+    gap: 1em;
+    height: 2em;
+}
+
+.SearchButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgb(black, 0.2);
+    font-size: small;
+}

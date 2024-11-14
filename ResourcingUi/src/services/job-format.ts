@@ -7,17 +7,12 @@ export const filterOption = {
 }
 export type filterOptionType = typeof filterOption[keyof typeof filterOption];
 
-export const formatDate = (date: string) => {
-    const [day, month, year] = date.split('-');
-    return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
-};
-
 export const sortJobs = (jobs: JobResponse[], selectedFilter: filterOptionType) => {
   const sortedJobs = [...jobs];
     if (selectedFilter === filterOption.STARTDATE) {
       sortedJobs.sort((a, b) => {
-        const dateA = a.startDate ? new Date(formatDate(a.startDate)).getTime() : null;
-        const dateB = b.startDate ? new Date(formatDate(b.startDate)).getTime(): null;
+        const dateA = a.startDate ? new Date(a.startDate).getTime() : null;
+        const dateB = b.startDate ? new Date(b.startDate).getTime(): null;
 
         // If both dates are null, they are equal
         if (dateA === null && dateB === null) return 0;
@@ -31,8 +26,8 @@ export const sortJobs = (jobs: JobResponse[], selectedFilter: filterOptionType) 
       })
     } else if (selectedFilter === filterOption.ENDDATE) {
       sortedJobs.sort((a, b) => {
-        const dateA = a.endDate ? new Date(formatDate(a.endDate)).getTime() : null;
-        const dateB = b.endDate ? new Date(formatDate(b.endDate)).getTime(): null;
+        const dateA = a.endDate ? new Date(a.endDate).getTime() : null;
+        const dateB = b.endDate ? new Date(b.endDate).getTime(): null;
 
         // If both dates are null, they are equal
         if (dateA === null && dateB === null) return 0;

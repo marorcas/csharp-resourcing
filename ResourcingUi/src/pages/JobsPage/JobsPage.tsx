@@ -16,12 +16,22 @@ const JobsPage = () => {
   }
   const { jobs, setJobs } = jobsContext;
 
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedJob, setSelectedJob] = useState<JobResponse | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.NAME);
   const [isCreateJobBtnVisible, setIsCreateJobBtnVisible] = useState<boolean>(true);
   const [isCreateJobFormOpen, setIsCreateJobFormOpen] = useState<boolean>(false);
   const [isEditJobFormOpen, setIsEditJobFormOpen] = useState<boolean>(false);
   const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
+
+  const filteredJobs = jobs.filter(
+    (job) =>
+    job.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
 
   const handleJobClick = (job: JobResponse) => {
     setSelectedJob(job);
@@ -113,7 +123,14 @@ const JobsPage = () => {
     <div className={styles.JobsPage}>
       <div className={styles.MainSection}>
         <h2>Jobs</h2>
-        <p>Search Bar</p>
+        <input
+          className={styles.SearchBar}
+          type="text"
+          id="search"
+          placeholder="Search for jobs..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
 
         <div className={styles.Filter}>
           <label htmlFor="filterBy">Filter by:</label>
@@ -130,7 +147,7 @@ const JobsPage = () => {
         </div>
 
         <ListWrapper>
-          {jobs.map((job) => 
+          {filteredJobs.map((job) => 
             <JobCard key={job.id} job={job} onClick={handleJobClick}/>
           )}
         </ListWrapper>

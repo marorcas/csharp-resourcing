@@ -22,12 +22,23 @@ const PeoplePage = () => {
   }
   const { temps, setTemps } = tempsContext;
 
+  const [searchTerm, setSearchTerm] = useState<string>("");
   const [selectedPerson, setSelectedPerson] = useState<TempResponse | null>(null);
   const [selectedFilter, setSelectedFilter] = useState<filterOptionType>(filterOption.FIRSTNAME);
   const [isCreateTempBtnVisible, setIsCreateTempBtnVisible] = useState<boolean>(true);
   const [isCreateTempFormOpen, setIsCreateTempFormOpen] = useState<boolean>(false);
   const [isEditTempFormOpen, setIsEditTempFormOpen] = useState<boolean>(false);
   const [isTickVisible, setIsTickVisible] = useState<boolean>(false);
+
+  const filteredTemps = temps.filter(
+    (temp) =>
+    temp.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    temp.lastName.toLowerCase().includes(searchTerm.toLowerCase())
+);
+
+const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  setSearchTerm(e.target.value);
+};
 
   const handlePersonClick = (person: TempResponse) => {
     setSelectedPerson(person);
@@ -119,7 +130,14 @@ const PeoplePage = () => {
     <div className={styles.PeoplePage}>
       <div className={styles.MainSection}>
         <h2>People</h2>
-        <p>Search Bar</p>
+        <input
+          className={styles.SearchBar}
+          type="text"
+          id="search"
+          placeholder="Search for people..."
+          value={searchTerm}
+          onChange={handleSearchChange}
+        />
         
         <div className={styles.Filter}>
           <label htmlFor="filterBy">Filter by:</label>
@@ -135,7 +153,7 @@ const PeoplePage = () => {
         </div>
 
         <ListWrapper>
-          {temps.map((person) => 
+          {filteredTemps.map((person) => 
             <PersonCard key={person.id} person={person} onClick={handlePersonClick}/>
           )}
         </ListWrapper>
