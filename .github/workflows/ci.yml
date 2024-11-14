@@ -21,8 +21,11 @@ jobs:
       with:
         dotnet-version: '8.0.403'  # Specify the .NET version you're using
 
+    - name: Restore dependencies
+      run: dotnet restore
+
     - name: Build the project
-      run: dotnet build
+      run: dotnet build --configuration Release --no-restore
 
     - name: Run xUnit tests
-      run: dotnet test /ResourcingApi.Tests/ResourcingApi.Tests.csproj
+      run: dotnet test /ResourcingApi.Tests/ResourcingApi.Tests.csproj --configuration Release --no-build
