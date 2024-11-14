@@ -29,11 +29,3 @@ jobs:
 
     - name: Run xUnit tests
       run: dotnet test --configuration Release --no-build --verbosity normal
-
-    - name: Publish test results
-      if: always()
-      run: |
-        # Create the test results directory
-        mkdir -p test-results
-        # Copy the test results to the directory
-        cp -r ./TestResults/. test-results/
