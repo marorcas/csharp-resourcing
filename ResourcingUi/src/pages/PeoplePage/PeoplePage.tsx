@@ -34,7 +34,7 @@ const PeoplePage = () => {
     (temp) =>
     temp.firstName.toLowerCase().includes(searchTerm.toLowerCase()) ||
     temp.lastName.toLowerCase().includes(searchTerm.toLowerCase())
-);
+  );
 
 const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   setSearchTerm(e.target.value);

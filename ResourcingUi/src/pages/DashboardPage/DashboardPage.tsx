@@ -5,6 +5,9 @@ import { getAllJobs } from "../../services/job-services";
 import { getAllTemps } from "../../services/temp-services";
 import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextProvider";
 import JobWeeklyChart from "../../components/JobWeeklyChart/JobWeeklyChart";
+import styles from "./DashboardPage.module.scss";
+import JobCard from "../../components/JobCard/JobCard";
+import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 
 const DashboardPage = () => {
   const jobsContext = useContext(JobsContext);
@@ -18,6 +21,12 @@ const DashboardPage = () => {
     throw new Error("Something went wrong");
   }
   const { setTemps } = tempContext;
+
+  const todayJobs = jobs.filter((job) => {
+    const todayDateString = new Date().toISOString().split('T')[0];
+  
+    return job.endDate && job.endDate.split('T')[0] === todayDateString;
+  });
 
   useEffect(() => {
     getAllJobs()
@@ -36,12 +45,27 @@ const DashboardPage = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.DashboardPage}>
       <h2>Dashboard</h2>
+      <div className={styles.DashboardInfo}>
+        <div className={styles.Today}>
+          <h3>Due Today</h3>
 
-      <JobAssignedChart jobData={jobs}/>
+          <ListWrapper>
+            {todayJobs.map((job) => 
+              <div className={styles.Job}>
+                <p>{job.name}</p>
+              </div>
+            )}
+          </ListWrapper>
+        </div>
 
-      {/* <JobWeeklyChart jobData={jobs}/> */}
+        <div className={styles.ChartsContainer}>
+          <JobAssignedChart jobData={jobs}/>
+
+          <JobWeeklyChart jobData={jobs}/>
+        </div>
+      </div>
     </div>
   )
 }

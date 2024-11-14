@@ -3,14 +3,14 @@ import styles from "./JobCard.module.scss";
 
 interface JobCardProps {
     job: JobResponse;
-    onClick: (job: JobResponse) => void;
+    onClick?: (job: JobResponse) => void;
 }
 
 const JobCard = ({ job, onClick }: JobCardProps) => {
   return (
     <li 
       className={styles.JobCard}
-      onClick={() => onClick(job)}
+      onClick={onClick? () => onClick(job) : undefined}
     >
         <p>{job.name}</p>
 

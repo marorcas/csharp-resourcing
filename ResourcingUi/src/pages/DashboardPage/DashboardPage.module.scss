@@ -1,0 +1,40 @@
+.DashboardPage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: 100%;
+}
+
+.DashboardInfo {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2em;
+    height: inherit;
+    width: inherit;
+}
+
+.Today {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 90%;
+    width: inherit;
+    overflow-y: auto;
+}
+
+.Job {
+    display: flex;
+    padding: 1em;
+    margin: 1em;
+    border: 1px solid rgb(black, 0.2);
+}
+
+.ChartsContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 1em;
+}

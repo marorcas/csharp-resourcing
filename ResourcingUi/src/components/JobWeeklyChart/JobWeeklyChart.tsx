@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Line } from "react-chartjs-2"; // Import the Line chart from Chart.js
-import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend, PointElement } from 'chart.js';
 import { JobResponse } from "../../services/job-services"; // Adjust the import based on your actual JobResponse interface
 
-ChartJS.register(CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, LineElement, Title, Tooltip, Legend, PointElement);
 
 interface ChartData {
     labels: string[];

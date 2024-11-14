@@ -15,6 +15,15 @@ public class FakeDataSeeder
 
     public void Seed()
     {
+        // Create 5 jobs with today's date as the endDate
+        var todayDate = DateTime.Now.Date; // Get today's date without time
+        var todayJobs = new Faker<Job>()
+            .RuleFor(j => j.Name, f => f.Company.Bs())
+            .RuleFor(j => j.StartDate, f => f.Date.Past(1).Date)  // Random start date within the past year
+            .RuleFor(j => j.EndDate, f => todayDate)  // Set the endDate to today's date
+
+            // Generate 5 jobs with today's date as the endDate
+            .Generate(5);
         // Create fake Jobs using Bogus
         var jobFaker = new Faker<Job>()
             .RuleFor(j => j.Name, f => f.Company.Bs())
@@ -22,7 +31,10 @@ public class FakeDataSeeder
             .RuleFor(j => j.EndDate, f => f.Date.Future(1).Date);  // Random end date within the next year
 
         var jobs = jobFaker.Generate(30);
-        _context.Jobs.AddRange(jobs);
+
+        // Combine all jobs
+        var allJobs = todayJobs.Concat(jobs).ToList();
+        _context.Jobs.AddRange(allJobs);
         _context.SaveChanges();
 
         // Create fake Temps using Bogus
