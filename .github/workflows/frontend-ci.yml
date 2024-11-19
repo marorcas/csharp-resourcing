@@ -20,11 +20,12 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-
+ 
     - name: Install dependencies
       run: |
         cd ResourcingUi
         npm install
+        npm install @testing-library/jest-dom/extend-expect
     
     - name: Run frontend tests
       run: |
