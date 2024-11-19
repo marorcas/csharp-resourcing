@@ -23,7 +23,7 @@ jobs:
 
     - name: Install dependencies
       run:  |
-        cd ResourcingUi
+        cd ./ResourcingUi
         npm install
     
     - name: Run frontend tests
