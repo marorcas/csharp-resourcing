@@ -121,3 +121,8 @@ Planned future features and improvements:
 - Added section for jobs due today on the dashboard page
 - Set up xunit testing suite
 - Created github workflows folder
+
+### 19/11/2024
+
+- Set up frontend testing suite
+- Created separate ci pipelines for frontend and backend
