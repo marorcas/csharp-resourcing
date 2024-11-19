@@ -22,11 +22,11 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
-      run:
+      run: |
         cd ResourcingUi
         npm install --verbose
     
     - name: Run frontend tests
-      run: 
+      run: |
         cd ResourcingUi
         npm test -- --ci --verbose
