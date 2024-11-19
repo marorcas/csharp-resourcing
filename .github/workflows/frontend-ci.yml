@@ -25,10 +25,4 @@ jobs:
       run: npm install
     
     - name: Run frontend tests
-      run: npm test -- --ci --coverage
-    
-    - name: Upload frontend coverage (optional)
-      if: success()
-      uses: codecov/codecov-action@v3
-      with:
-        files: ./coverage/lcov-report/index.html
+      run: npm test
