@@ -25,7 +25,7 @@ jobs:
       run: |
         cd ResourcingUi
         npm install
-        npm install @testing-library/jest-dom/extend-expect
+        npm install @testing-library/jest-dom
     
     - name: Run frontend tests
       run: |
