@@ -24,9 +24,9 @@ jobs:
     - name: Install dependencies
       run:
         cd ResourcingUi
-        npm install
+        npm install --verbose
     
     - name: Run frontend tests
       run: 
         cd ResourcingUi
-        npm test
+        npm test -- --ci --verbose
