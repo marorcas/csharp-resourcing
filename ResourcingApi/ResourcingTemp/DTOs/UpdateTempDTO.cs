@@ -1,6 +1,6 @@
 using ResourcingApi.Models;
 
-namespace ResourcingApi.ResourcingTemp
+namespace ResourcingApi.ResourcingTemp.DTOs
 {
     public class UpdateTempDTO
     {

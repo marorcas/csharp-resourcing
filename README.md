@@ -130,8 +130,13 @@ Planned future features and improvements:
 ### 20/11/2024
 
 - Created a test for job creation
-- Created some tests for get all jobs
+- Created tests for get all jobs
 - Created tests for get job by id
 - Created tests for get temps assigned to job
 - Created tests for update job by id
 - Created tests for delete job by id
+- Created a test for temp creation
+- Created tests for get all temps
+- Created tests for get temp by id
+- Created tests for update temp by id
+- Created tests for delete temp by id

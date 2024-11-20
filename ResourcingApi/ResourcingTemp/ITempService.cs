@@ -1,3 +1,5 @@
+using ResourcingApi.ResourcingTemp.DTOs;
+
 namespace ResourcingApi.ResourcingTemp
 {
     public interface ITempService

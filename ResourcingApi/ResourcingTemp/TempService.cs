@@ -1,5 +1,6 @@
 
 using ResourcingApi.ResourcingJob;
+using ResourcingApi.ResourcingTemp.DTOs;
 
 namespace ResourcingApi.ResourcingTemp
 {
