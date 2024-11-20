@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations;
 using ResourcingApi.Models;
 
 namespace ResourcingApi.ResourcingJob.DTOs

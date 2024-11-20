@@ -23,7 +23,7 @@ namespace ResourcingApi.ResourcingJob
         }
 
         [HttpGet]
-        public async Task<ActionResult<List<Job>>> GetAll([FromQuery] bool? assigned = null)
+        public async Task<ObjectResult> GetAll([FromQuery] bool? assigned = null)
         {
             List<Job> jobs;
             if (assigned.HasValue)

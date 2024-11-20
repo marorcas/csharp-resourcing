@@ -19,16 +19,36 @@ public class JobControllerTests
     [Fact]
     public async Task CreateJob_ShouldReturnCreatedResult_WhenValidDto()
     {
-        var createJobDto = new CreateJobDTO { Name = "Job1" };
-        var createdJob = new Job { Id = 1, Name = "Job1" };
+        var createdJob = new CreateJobDTO { Name = "Job1" };
+        var expectedJob = new Job { Id = 1, Name = "Job1" };
 
         _mockJobService.Setup(service => service.CreateJob(It.IsAny<CreateJobDTO>()))
-            .ReturnsAsync(createdJob);
+            .ReturnsAsync(expectedJob);
 
-        var result = await _controller.Create(createJobDto);
+        var result = await _controller.Create(createdJob);
 
         var actionResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(201, actionResult.StatusCode);
-        Assert.Equal(createdJob, actionResult.Value);
+        Assert.Equal(expectedJob, actionResult.Value);
+    }
+
+    [Fact]
+    public async Task GetAllJobs_ShouldReturnOkResult_WhenThereAreJobs()
+    {
+         var jobList = new List<Job>
+        {
+            new Job { Id = 1, Name = "Job 1" },
+            new Job { Id = 2, Name = "Job 2" },
+            new Job { Id = 3, Name = "Job 3" }
+        };
+
+        _mockJobService.Setup(service => service.GetAllJobs())
+            .ReturnsAsync(jobList);
+
+        var result = await _controller.GetAll();
+
+        var actionResult = Assert.IsType<OkObjectResult>(result);
+        Assert.Equal(200, actionResult.StatusCode);
+        Assert.Equal(jobList, actionResult.Value);
     }
 }

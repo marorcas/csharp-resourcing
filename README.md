@@ -130,3 +130,4 @@ Planned future features and improvements:
 ### 20/11/2024
 
 - Created a test for job creation
+- Created a test for get all jobs
