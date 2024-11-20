@@ -126,3 +126,7 @@ Planned future features and improvements:
 
 - Set up frontend testing suite
 - Created separate ci pipelines for frontend and backend
+
+### 20/11/2024
+
+- Created a test for job creation

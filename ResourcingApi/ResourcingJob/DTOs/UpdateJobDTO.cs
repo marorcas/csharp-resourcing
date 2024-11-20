@@ -1,6 +1,6 @@
 using ResourcingApi.Models;
 
-namespace ResourcingApi.ResourcingJob
+namespace ResourcingApi.ResourcingJob.DTOs
 {
     public class UpdateJobDTO
     {

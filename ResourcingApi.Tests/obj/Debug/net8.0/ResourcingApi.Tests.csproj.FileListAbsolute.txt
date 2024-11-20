@@ -141,3 +141,5 @@ C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi.Tests\obj\Debug\
 C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi.Tests\obj\Debug\net8.0\ResourcingApi.Tests.pdb
 C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi.Tests\obj\Debug\net8.0\ResourcingApi.Tests.genruntimeconfig.cache
 C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi.Tests\obj\Debug\net8.0\ref\ResourcingApi.Tests.dll
+C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi.Tests\bin\Debug\net8.0\Castle.Core.dll
+C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi.Tests\bin\Debug\net8.0\Moq.dll

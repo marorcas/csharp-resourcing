@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ResourcingApi.ResourcingJob.DTOs;
 using ResourcingApi.ResourcingTemp;
 
 namespace ResourcingApi.ResourcingJob
@@ -15,7 +16,7 @@ namespace ResourcingApi.ResourcingJob
         }
 
         [HttpPost]
-        public async Task<ActionResult<Job>> Create([FromBody] CreateJobDTO data)
+        public async Task<ObjectResult> Create([FromBody] CreateJobDTO data)
         {
             var job = await _jobService.CreateJob(data);
             return StatusCode(201, job);
