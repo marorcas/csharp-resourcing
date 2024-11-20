@@ -35,7 +35,7 @@ public class JobControllerTests
     [Fact]
     public async Task GetAllJobs_ShouldReturnOkResult_WhenThereAreJobs()
     {
-         var jobList = new List<Job>
+        var jobList = new List<Job>
         {
             new Job { Id = 1, Name = "Job 1" },
             new Job { Id = 2, Name = "Job 2" },
@@ -50,5 +50,44 @@ public class JobControllerTests
         var actionResult = Assert.IsType<OkObjectResult>(result);
         Assert.Equal(200, actionResult.StatusCode);
         Assert.Equal(jobList, actionResult.Value);
+    }
+
+    [Fact]
+    public async Task GetAllJobs_ShouldReturnOkResult_WhenThereAreNoJobs()
+    {
+        var jobList = new List<Job> { };
+
+        _mockJobService.Setup(service => service.GetAllJobs())
+            .ReturnsAsync(jobList);
+
+        var result = await _controller.GetAll();
+
+        var actionResult = Assert.IsType<OkObjectResult>(result);
+        Assert.Equal(200, actionResult.StatusCode);
+        Assert.Equal(jobList, actionResult.Value);
+    }
+
+    [Fact]
+    public async Task GetAllJobs_WithAssignedQuery_ShouldReturnOkResult()
+    {
+        Job trueJob = new Job { Id = 3, Name = "Job 3", Assigned = true };
+        var jobList = new List<Job>
+        {
+            new Job { Id = 1, Name = "Job 1" },
+            new Job { Id = 2, Name = "Job 2" },
+            trueJob
+        };
+
+        _mockJobService.Setup(service => service.GetJobsByAssignedStatus(true))
+            .ReturnsAsync(new List<Job> { trueJob });
+
+        var result = await _controller.GetAll(true);
+
+        var actionResult = Assert.IsType<OkObjectResult>(result);
+        Assert.Equal(200, actionResult.StatusCode);
+        
+        var jobs = Assert.IsType<List<Job>>(actionResult.Value);
+        Assert.Single(jobs);
+        Assert.Equal(trueJob, jobs[0]);
     }
 }
