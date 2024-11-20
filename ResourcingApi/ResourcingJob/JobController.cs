@@ -36,30 +36,30 @@ namespace ResourcingApi.ResourcingJob
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Job>> GetById(long id)
+        public async Task<ObjectResult> GetById(long id)
         {
             var job = await _jobService.GetJobById(id);
-            if (job == null) return NotFound();
+            if (job == null) return NotFound(null);
             return Ok(job);
         }
 
         [HttpGet("{id}/assignedto")]
-        public async Task<ActionResult<List<Temp>>> GetAssignedTo(long id)
+        public async Task<ObjectResult> GetAssignedTo(long id)
         {
             var temps = await _jobService.GetAssignedTemps(id);
             return Ok(temps);
         }
 
         [HttpPatch("{id}")]
-        public async Task<ActionResult<Job>> Update(long id, [FromBody] UpdateJobDTO data)
+        public async Task<ObjectResult> Update(long id, [FromBody] UpdateJobDTO data)
         {
             var job = await _jobService.UpdateJobById(id, data);
-            if (job == null) return NotFound();
+            if (job == null) return NotFound(null);
             return Ok(job);
         }
 
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Job>> Delete(long id)
+        public async Task<IActionResult> Delete(long id)
         {
             var deleted = await _jobService.DeleteJobById(id);
             if (!deleted) return NotFound();

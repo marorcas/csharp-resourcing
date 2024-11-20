@@ -131,3 +131,7 @@ Planned future features and improvements:
 
 - Created a test for job creation
 - Created some tests for get all jobs
+- Created tests for get job by id
+- Created tests for get temps assigned to job
+- Created tests for update job by id
+- Created tests for delete job by id
