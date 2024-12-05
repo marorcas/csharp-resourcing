@@ -6,7 +6,6 @@ import { getAllTemps } from "../../services/temp-services";
 import { TempsContext } from "../../contexts/TempsContextProvider/TempsContextProvider";
 import JobWeeklyChart from "../../components/JobWeeklyChart/JobWeeklyChart";
 import styles from "./DashboardPage.module.scss";
-import JobCard from "../../components/JobCard/JobCard";
 import ListWrapper from "../../wrappers/ListWrapper/ListWrapper";
 
 const DashboardPage = () => {

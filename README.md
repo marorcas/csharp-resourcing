@@ -140,3 +140,8 @@ Planned future features and improvements:
 - Created tests for get temp by id
 - Created tests for update temp by id
 - Created tests for delete temp by id
+
+### 4/12/2024
+
+- Created Dockerfiles for backend and frontend
+- Created Docker compose file
