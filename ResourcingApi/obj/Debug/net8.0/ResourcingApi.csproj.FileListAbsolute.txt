@@ -135,3 +135,5 @@ C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi\obj\Debug\net8.0
 C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi\obj\Debug\net8.0\ResourcingApi.pdb
 C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi\obj\Debug\net8.0\ResourcingApi.genruntimeconfig.cache
 C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi\obj\Debug\net8.0\ref\ResourcingApi.dll
+C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi\bin\Debug\net8.0\DotNetEnv.dll
+C:\Users\ortzm\Documents\nology\csharp-resourcing\ResourcingApi\bin\Debug\net8.0\Sprache.dll

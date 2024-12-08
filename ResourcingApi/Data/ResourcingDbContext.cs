@@ -13,14 +13,6 @@ namespace ResourcingApi.Data
         public DbSet<Temp> Temps { get; set; }
         public DbSet<JobTemp> JobTemps { get; set; }
 
-         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            // Enable SQL query logging in console
-            optionsBuilder
-                .UseMySql("Server=localhost;Database=ResourcingDb;User=root;Password=MyPass;", ServerVersion.AutoDetect("Server=localhost;Database=ResourcingDb;User=root;Password=MyPass;"))
-                .LogTo(Console.WriteLine, LogLevel.Information); // Logs SQL to console
-        }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             // Define the many-to-many relationship using JobTemp as the join table

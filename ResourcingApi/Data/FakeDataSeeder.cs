@@ -15,6 +15,17 @@ public class FakeDataSeeder
 
     public void Seed()
     {
+        // Delete all data from the database to reset it
+        Console.WriteLine("Deleting existing data...");
+
+        // Deleting data from dependent tables first to avoid foreign key issues
+        _context.JobTemps.RemoveRange(_context.JobTemps);  // Remove all JobTemp associations
+        _context.Temps.RemoveRange(_context.Temps);        // Remove all Temps
+        _context.Jobs.RemoveRange(_context.Jobs);          // Remove all Jobs
+
+        // Save changes to the database (this deletes the data)
+        _context.SaveChanges();
+
         // Create 5 jobs with today's date as the endDate
         var todayDate = DateTime.Now.Date; // Get today's date without time
         var todayJobs = new Faker<Job>()
@@ -24,6 +35,7 @@ public class FakeDataSeeder
 
             // Generate 5 jobs with today's date as the endDate
             .Generate(5);
+
         // Create fake Jobs using Bogus
         var jobFaker = new Faker<Job>()
             .RuleFor(j => j.Name, f => f.Company.Bs())

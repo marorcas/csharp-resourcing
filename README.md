@@ -1,5 +1,9 @@
 # Job Resourcing Application (C# version)
 
+[![Backend CI](https://github.com/marorcas/csharp-resourcing/actions/workflows/backend-ci.yml/badge.svg)](https://github.com/marorcas/csharp-resourcing/actions/workflows/backend-ci.yml)
+
+[![Frontend CI](https://github.com/marorcas/csharp-resourcing/actions/workflows/frontend-ci.yml/badge.svg)](https://github.com/marorcas/csharp-resourcing/actions/workflows/frontend-ci.yml)
+
 ## Table of Contents
 
 - [Description](#description)
@@ -145,3 +149,18 @@ Planned future features and improvements:
 
 - Created Dockerfiles for backend and frontend
 - Created Docker compose file
+
+### 5/12/2024
+
+- Created database on AWS RDS
+- Connected backend to AWS database
+- Updated fake data seeder to only populate database if empty
+
+### 7/12/2024
+
+- Updated fake data seeder to delete all data and then create new data each time app is launched
+
+### 8/12/2024
+
+- Created file for environment variables
+- Added workflow badges for CI pipelines

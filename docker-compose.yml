@@ -6,7 +6,13 @@ services:
       context: ./ResourcingApi
     image: resourcing-api
     ports:
-      - "5000:80"
+      - "5180:80"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_NAME=${DB_NAME}
     networks:
       - app-network
 
